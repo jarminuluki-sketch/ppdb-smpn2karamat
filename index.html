@@ -68,6 +68,13 @@
             </div>
             <div class="form-group"><label>No WhatsApp Ortu</label><input type="tel" id="wa" required placeholder="08xxxxxxxxxx"></div>
             
+            <!-- UNGGAH FORMULIR FISIK / CETAK -->
+            <div class="form-group">
+                <label>Unggah Formulir Pendaftaran (PDF/Gambar)</label>
+                <input type="file" id="formulir_file" accept=".pdf,.jpg,.jpeg,.png" required onchange="validasiUkuranFile(this, 2)">
+                <small class="file-hint">* Format: PDF, JPG, PNG. <strong>Maksimal ukuran file: 2 MB</strong></small>
+            </div>
+
             <!-- UNGGAH AKTA KELAHIRAN -->
             <div class="form-group">
                 <label>Unggah Akta Kelahiran (PDF/Gambar)</label>
@@ -226,6 +233,7 @@
         const btnSubmit = document.getElementById('btnSubmit');
         const statusForm = document.getElementById('statusForm');
 
+        const formulirFile = document.getElementById('formulir_file').files[0];
         const aktaFile = document.getElementById('akta').files[0];
         const berkasFile = document.getElementById('berkas').files[0];
         const fotoFile = document.getElementById('foto').files[0];
@@ -237,6 +245,7 @@
 
         try {
             // Kompresi otomatis di browser pendaftar
+            const formulirBase64 = await kompresGambar(formulirFile);
             const aktaBase64 = await kompresGambar(aktaFile);
             const berkasBase64 = await kompresGambar(berkasFile);
             const fotoBase64 = await kompresGambar(fotoFile);
@@ -249,6 +258,9 @@
                 nama: document.getElementById('nama').value,
                 jalur: document.getElementById('jalur').value,
                 wa: document.getElementById('wa').value,
+                formulirBase64: formulirBase64,
+                formulirExt: formulirFile.name.split('.').pop(),
+                formulirMime: formulirFile.type,
                 aktaBase64: aktaBase64,
                 aktaExt: aktaFile.name.split('.').pop(),
                 aktaMime: aktaFile.type,
@@ -352,6 +364,7 @@
                             <td><b>${item.nama}</b><br><small>NISN: ${item.nisn}</small></td>
                             <td>${item.jalur}<br><small>${item.jarak} M</small></td>
                             <td>
+                                ${item.formulir ? `<a href="${item.formulir}" target="_blank">Formulir</a>` : '-'}<br>
                                 ${item.akta ? `<a href="${item.akta}" target="_blank">Akta</a>` : '-'}<br>
                                 ${item.berkas ? `<a href="${item.berkas}" target="_blank">Berkas</a>` : '-'}<br>
                                 ${item.foto ? `<a href="${item.foto}" target="_blank">Foto</a>` : '-'}
