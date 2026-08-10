@@ -1,115 +1,97 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pendaftaran SMP Negeri 2 Karamat</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f6f9;
-      padding: 20px;
-    }
-
-    .container {
-      max-width: 500px;
-      background: white;
-      padding: 25px;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      margin: auto;
-    }
-
-    h2 {
-      text-align: center;
-      color: #1e3a8a;
-    }
-
-    .form-group {
-      margin-bottom: 15px;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 5px;
-      font-weight: bold;
-    }
-
-    input,
-    select {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      box-sizing: border-box;
-    }
-
-    button {
-      width: 100%;
-      padding: 12px;
-      background: #2563eb;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #1d4ed8;
-    }
-
-    #status {
-      margin-top: 15px;
-      text-align: center;
-      font-weight: bold;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pendaftaran SMP Negeri 2 Karamat</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f6f9; padding: 20px; }
+        .container { max-width: 550px; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin: auto; }
+        h2 { text-align: center; color: #1e3a8a; margin-bottom: 5px; }
+        p.subtitle { text-align: center; color: #4b5563; font-size: 14px; margin-top: 0; margin-bottom: 25px; }
+        .form-group { margin-bottom: 18px; }
+        label { display: block; margin-bottom: 6px; font-weight: 600; color: #374151; font-size: 14px; }
+        input, select { width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 6px; box-sizing: border-box; font-size: 14px; }
+        input:focus, select:focus { outline: none; border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2); }
+        .btn-location { width: 100%; padding: 12px; background: #2563eb; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; transition: background 0.2s; }
+        .btn-location:hover { background: #1d4ed8; }
+        .btn-submit { width: 100%; padding: 14px; background: #9ca3af; color: white; border: none; border-radius: 6px; font-weight: bold; font-size: 16px; cursor: not-allowed; margin-top: 10px; }
+        #status { margin-top: 18px; text-align: center; font-weight: bold; font-size: 14px; }
+        small.note { color: #6b7280; font-size: 12px; display: block; margin-top: 4px; }
+    </style>
 </head>
-
 <body>
 
-  <div class="container">
-    <h2>Form Pendaftaran PPDB<br><small>SMP Negeri 2 Karamat</small></h2>
+<div class="container">
+    <h2>Form Pendaftaran PPDB</h2>
+    <p class="subtitle">SMP Negeri 2 Karamat</p>
+    
     <form id="formPendaftaran">
-      <div class="form-group">
-        <label>NISN</label>
-        <input type="number" id="nisn" required placeholder="Masukkan 10 digit NISN">
-      </div>
-      <div class="form-group">
-        <label>Nama Lengkap</label>
-        <input type="text" id="nama" required placeholder="Nama sesuai ijazah SD">
-      </div>
-      <div class="form-group">
-        <label>Jalur Pendaftaran</label>
-        <select id="jalur" required>
+        <div class="form-group">
+            <label>NISN</label>
+            <input type="number" id="nisn" required placeholder="Masukkan 10 digit NISN">
+        </div>
+
+        <div class="form-group">
+            <label>Nomor Induk Kependudukan (NIK / KTP Siswa)</label>
+            <input type="number" id="nik" required placeholder="Masukkan 16 digit NIK">
+        </div>
+
+        <div class="form-group">
+            <label>Nomor Kartu Keluarga (KK)</label>
+            <input type="number" id="no_kk" required placeholder="Masukkan 16 digit No. KK">
+        </div>
+
+        <div class="form-group">
+            <label>Nama Lengkap</label>
+            <input type="text" id="nama" required placeholder="Nama sesuai ijazah SD">
+        </div>
+
+        <div class="form-group">
+            <label>Jalur Pendaftaran</label>
+            <select id="jalur" required>
                 <option value="">-- Pilih Jalur --</option>
                 <option value="Zonasi">Zonasi</option>
                 <option value="Afirmasi">Afirmasi</option>
                 <option value="Prestasi">Prestasi</option>
                 <option value="Perpindahan Ortu">Perpindahan Tugas Orang Tua</option>
             </select>
-      </div>
-      <div class="form-group">
-        <label>Nomor WhatsApp Orang Tua</label>
-        <input type="tel" id="wa" required placeholder="08xxxxxxxxxx">
-      </div>
-      <button type="button" onclick="dapatkanLokasi()">1. Ambil Lokasi Rumah Saya</button>
-      <p id="lokasiText" style="font-size: 12px; color: gray; text-align: center;"></p>
+        </div>
 
-      <input type="hidden" id="latitude">
-      <input type="hidden" id="longitude">
+        <div class="form-group">
+            <label>Nomor WhatsApp Orang Tua</label>
+            <input type="tel" id="wa" required placeholder="08xxxxxxxxxx">
+        </div>
 
-      <br>
-      <button type="submit" id="btnSubmit" disabled style="background-color: #9ca3af;">2. Kirim Pendaftaran</button>
+        <div class="form-group">
+            <label>Unggah Berkas Pendukung (KK / Ijazah / Akta)</label>
+            <input type="file" id="berkas" accept=".pdf,.jpg,.jpeg,.png" required>
+            <small class="note">Format: PDF atau Gambar (Maksimal 5MB)</small>
+        </div>
+
+        <div class="form-group">
+            <label>Unggah Swafoto / Pass Foto Siswa</label>
+            <input type="file" id="foto" accept="image/*" required>
+            <small class="note">Format: JPG/PNG foto formal atau swafoto jelas</small>
+        </div>
+
+        <div class="form-group">
+            <button type="button" class="btn-location" onclick="dapatkanLokasi()">1. Ambil Lokasi Rumah Saya</button>
+            <p id="lokasiText" style="font-size: 12px; color: #4b5563; text-align: center; margin-top: 6px;"></p>
+        </div>
+
+        <input type="hidden" id="latitude">
+        <input type="hidden" id="longitude">
+
+        <button type="submit" id="btnSubmit" class="btn-submit" disabled>2. Kirim Pendaftaran</button>
     </form>
-    <div id="status"></div>
-  </div>
 
-  <script>
-    // MASUKKAN URL GOOGLE APPS SCRIPT ANDA DI SINI
-    const SCRIPT_URL = "PPDB SMPN 2 Karamat";
+    <div id="status"></div>
+</div>
+
+<script>
+    // MASUKKAN URL GOOGLE APPS SCRIPT BARU ANDA DI SINI
+    const SCRIPT_URL = "URL_WEB_APP_BARU_ANDA_DI_SINI";
 
     function dapatkanLokasi() {
         const lokasiText = document.getElementById('lokasiText');
@@ -118,14 +100,14 @@
             navigator.geolocation.getCurrentPosition((position) => {
                 document.getElementById('latitude').value = position.coords.latitude;
                 document.getElementById('longitude').value = position.coords.longitude;
-                lokasiText.innerText = "Lokasi berhasil dikunci: " + position.coords.latitude + ", " + position.coords.longitude;
+                lokasiText.innerText = "Lokasi dikunci: " + position.coords.latitude.toFixed(5) + ", " + position.coords.longitude.toFixed(5);
                 
-                // Aktifkan tombol submit setelah lokasi didapat
                 const btn = document.getElementById('btnSubmit');
                 btn.disabled = false;
                 btn.style.backgroundColor = "#2563eb";
+                btn.style.cursor = "pointer";
             }, () => {
-                alert("Gagal mendapatkan lokasi. Izinkan akses lokasi pada browser Anda.");
+                alert("Gagal mendapatkan lokasi. Pastikan izin GPS/Lokasi diizinkan pada browser.");
                 lokasiText.innerText = "Akses lokasi ditolak.";
             });
         } else {
@@ -133,41 +115,86 @@
         }
     }
 
-    document.getElementById('formPendaftaran').addEventListener('submit', function(e) {
+    // Helper merubah File menjadi Base64
+    function fileToBase64(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+        });
+    }
+
+    document.getElementById('formPendaftaran').addEventListener('submit', async function(e) {
         e.preventDefault();
         const statusDiv = document.getElementById('status');
-        statusDiv.innerText = "Mengirim data...";
-        statusDiv.style.color = "blue";
+        const btnSubmit = document.getElementById('btnSubmit');
+        
+        statusDiv.innerText = "Sedang mengunggah berkas dan menyimpan data...";
+        statusDiv.style.color = "#2563eb";
+        btnSubmit.disabled = true;
 
-        const payload = {
-            nisn: document.getElementById('nisn').value,
-            nama: document.getElementById('nama').value,
-            jalur: document.getElementById('jalur').value,
-            wa: document.getElementById('wa').value,
-            latitude: parseFloat(document.getElementById('latitude').value),
-            longitude: parseFloat(document.getElementById('longitude').value)
-        };
+        try {
+            const berkasFile = document.getElementById('berkas').files[0];
+            const fotoFile = document.getElementById('foto').files[0];
 
-        fetch(SCRIPT_URL, {
-            method: 'POST',
-            body: JSON.stringify(payload)
-        })
-        .then(response => response.json())
-        .then(data => {
-            if(data.result === 'success') {
-                statusDiv.innerText = "Pendaftaran Berhasil! Jarak ke sekolah: " + data.jarak + " meter.";
-                statusDiv.style.color = "green";
-                document.getElementById('formPendaftaran').reset();
+            let berkasBase64 = "", berkasExt = "", berkasMime = "";
+            if(berkasFile) {
+                berkasBase64 = await fileToBase64(berkasFile);
+                berkasExt = berkasFile.name.split('.').pop();
+                berkasMime = berkasFile.type;
             }
-        })
-        .catch(error => {
-            statusDiv.innerText = "Terjadi kesalahan saat mengunggah data.";
-            statusDiv.style.color = "red";
-            console.error('Error!', error.message);
-        });
+
+            let fotoBase64 = "";
+            if(fotoFile) {
+                fotoBase64 = await fileToBase64(fotoFile);
+            }
+
+            const payload = {
+                nisn: document.getElementById('nisn').value,
+                nik: document.getElementById('nik').value,
+                no_kk: document.getElementById('no_kk').value,
+                nama: document.getElementById('nama').value,
+                jalur: document.getElementById('jalur').value,
+                wa: document.getElementById('wa').value,
+                berkasBase64: berkasBase64,
+                berkasExt: berkasExt,
+                berkasMime: berkasMime,
+                fotoBase64: fotoBase64,
+                latitude: parseFloat(document.getElementById('latitude').value),
+                longitude: parseFloat(document.getElementById('longitude').value)
+            };
+
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                body: JSON.stringify(payload)
+            })
+            .then(res => res.json())
+            .then(data => {
+                if(data.result === 'success') {
+                    statusDiv.innerText = "Pendaftaran Berhasil! Jarak ke sekolah: " + data.jarak + " meter.";
+                    statusDiv.style.color = "#16a34a";
+                    document.getElementById('formPendaftaran').reset();
+                    document.getElementById('lokasiText').innerText = "";
+                } else {
+                    statusDiv.innerText = "Gagal: " + data.message;
+                    statusDiv.style.color = "#dc2626";
+                    btnSubmit.disabled = false;
+                }
+            })
+            .catch(err => {
+                statusDiv.innerText = "Terjadi kesalahan koneksi saat mengirim data.";
+                statusDiv.style.color = "#dc2626";
+                btnSubmit.disabled = false;
+            });
+
+        } catch (err) {
+            statusDiv.innerText = "Gagal memproses file dokumen.";
+            statusDiv.style.color = "#dc2626";
+            btnSubmit.disabled = false;
+        }
     });
-  </script>
+</script>
 
 </body>
-
 </html>
