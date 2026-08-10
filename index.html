@@ -3,36 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PPDB SMP Negeri 2 Karamat</title>
+    <title>PPDB Online SMP Negeri 2 Karamat</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f6f9; padding: 20px; margin: 0; }
-        .container { max-width: 650px; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin: auto; }
+        .container { max-width: 650px; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin: auto; }
         h2 { text-align: center; color: #1e3a8a; margin-bottom: 5px; }
         p.subtitle { text-align: center; color: #4b5563; font-size: 14px; margin-top: 0; margin-bottom: 20px; }
         
-        /* Navigasi Tab Menu */
-        .tab-menu { display: flex; gap: 5px; margin-bottom: 20px; border-bottom: 2px solid #e5e7eb; }
-        .tab-btn { flex: 1; padding: 10px; background: #f3f4f6; border: none; font-weight: bold; color: #4b5563; cursor: pointer; border-radius: 6px 6px 0 0; }
+        /* Tab Menu Styling */
+        .tab-menu { display: flex; gap: 5px; margin-bottom: 25px; border-bottom: 2px solid #e5e7eb; }
+        .tab-btn { flex: 1; padding: 12px; background: #f3f4f6; border: none; font-weight: bold; color: #4b5563; cursor: pointer; border-radius: 6px 6px 0 0; transition: 0.2s; }
         .tab-btn.active { background: #2563eb; color: white; }
         .tab-content { display: none; }
         .tab-content.active { display: block; }
 
-        .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-weight: 600; color: #374151; font-size: 14px; }
-        input, select { width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; box-sizing: border-box; font-size: 14px; }
-        button { width: 100%; padding: 12px; background: #2563eb; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; }
+        .form-group { margin-bottom: 16px; }
+        label { display: block; margin-bottom: 6px; font-weight: 600; color: #374151; font-size: 14px; }
+        input, select { width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 6px; box-sizing: border-box; font-size: 14px; }
+        button { width: 100%; padding: 12px; background: #2563eb; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 14px; }
         button:disabled { background: #9ca3af; cursor: not-allowed; }
         
-        /* Styling Hasil Status */
+        /* Status Display */
         .status-box { padding: 15px; border-radius: 8px; margin-top: 15px; text-align: center; font-weight: bold; }
         .status-diterima { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
         .status-ditolak { background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; }
         .status-proses { background: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
 
         /* Tabel Petugas */
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 12px; }
-        th, td { border: 1px solid #e5e7eb; padding: 8px; text-align: left; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 13px; }
+        th, td { border: 1px solid #e5e7eb; padding: 10px; text-align: left; }
         th { background: #f9fafb; }
+        .btn-update { background: #059669; padding: 6px 10px; font-size: 12px; margin-top: 5px; }
     </style>
 </head>
 <body>
@@ -41,20 +42,20 @@
     <h2>PPDB Online</h2>
     <p class="subtitle">SMP Negeri 2 Karamat</p>
 
-    <!-- Navigasi Menu -->
+    <!-- Navigasi Menu Tab -->
     <div class="tab-menu">
         <button class="tab-btn active" onclick="openTab('formTab', this)">Formulir</button>
         <button class="tab-btn" onclick="openTab('statusTab', this)">Cek Status</button>
         <button class="tab-btn" onclick="openTab('petugasTab', this)">Menu Petugas</button>
     </div>
 
-    <!-- TAB 1: FORMULIR PENDAFTARAN -->
+    <!-- TAB 1: FORMULIR -->
     <div id="formTab" class="tab-content active">
         <form id="formPendaftaran">
-            <div class="form-group"><label>NISN</label><input type="number" id="nisn" required></div>
-            <div class="form-group"><label>NIK Siswa</label><input type="number" id="nik" required></div>
-            <div class="form-group"><label>No. KK</label><input type="number" id="no_kk" required></div>
-            <div class="form-group"><label>Nama Lengkap</label><input type="text" id="nama" required></div>
+            <div class="form-group"><label>NISN</label><input type="number" id="nisn" required placeholder="10 digit NISN"></div>
+            <div class="form-group"><label>NIK Siswa</label><input type="number" id="nik" required placeholder="16 digit NIK"></div>
+            <div class="form-group"><label>No. KK</label><input type="number" id="no_kk" required placeholder="16 digit No. KK"></div>
+            <div class="form-group"><label>Nama Lengkap</label><input type="text" id="nama" required placeholder="Sesuai ijazah SD"></div>
             <div class="form-group">
                 <label>Jalur Pendaftaran</label>
                 <select id="jalur" required>
@@ -65,26 +66,28 @@
                     <option value="Perpindahan Ortu">Perpindahan Tugas Orang Tua</option>
                 </select>
             </div>
-            <div class="form-group"><label>No WhatsApp Ortu</label><input type="tel" id="wa" required></div>
+            <div class="form-group"><label>No WhatsApp Ortu</label><input type="tel" id="wa" required placeholder="08xxxxxxxxxx"></div>
             <div class="form-group"><label>Unggah Berkas Pendukung (PDF/Gambar)</label><input type="file" id="berkas" accept=".pdf,.jpg,.jpeg,.png" required></div>
             <div class="form-group"><label>Unggah Swafoto Siswa</label><input type="file" id="foto" accept="image/*" required></div>
+            
             <div class="form-group">
                 <button type="button" onclick="dapatkanLokasi()">1. Ambil Lokasi Rumah Saya</button>
                 <p id="lokasiText" style="font-size: 12px; color: #4b5563; text-align: center; margin-top: 5px;"></p>
             </div>
+            
             <input type="hidden" id="latitude"><input type="hidden" id="longitude">
             <button type="submit" id="btnSubmit" disabled>2. Kirim Pendaftaran</button>
         </form>
-        <div id="statusForm" style="margin-top:15px; text-align:center;"></div>
+        <div id="statusForm" style="margin-top:15px; text-align:center; font-weight:bold;"></div>
     </div>
 
-    <!-- TAB 2: CEK STATUS PENDAFTARAN -->
+    <!-- TAB 2: CEK STATUS -->
     <div id="statusTab" class="tab-content">
         <div class="form-group">
             <label>Masukkan NISN Calon Siswa</label>
             <input type="number" id="searchNisn" placeholder="Contoh: 0081234567">
         </div>
-        <button onclick="cekStatusSiswa()">Cek Hasil Seleksi</button>
+        <button onclick="cekStatusSiswa()" id="btnCek">Cek Hasil Seleksi</button>
         <div id="hasilCekStatus"></div>
     </div>
 
@@ -93,23 +96,24 @@
         <div id="loginPetugasView">
             <div class="form-group">
                 <label>Masukkan PIN Petugas</label>
-                <input type="password" id="pinPetugas" placeholder="PIN Rahasia">
+                <input type="password" id="pinPetugas" placeholder="PIN Rahasia (Bawaan: 123456)">
             </div>
             <button onclick="loadDataPetugas()">Masuk Panel Petugas</button>
         </div>
         
         <div id="panelPetugasView" style="display:none;">
-            <h3>Data Pendaftar PPDB</h3>
-            <button onclick="loadDataPetugas()" style="background:#059669; margin-bottom:10px;">Refresh Data</button>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <h3 style="margin:0;">Data Pendaftar</h3>
+                <button onclick="loadDataPetugas()" style="width:auto; background:#059669; padding:8px 15px;">Refresh</button>
+            </div>
             <div style="overflow-x:auto;">
                 <table id="tabelPetugas">
                     <thead>
                         <tr>
-                            <th>NISN & Nama</th>
-                            <th>Jalur / Jarak</th>
+                            <th>Siswa</th>
+                            <th>Jalur/Jarak</th>
                             <th>Berkas</th>
-                            <th>Status Saat Ini</th>
-                            <th>Aksi Ubah Status</th>
+                            <th>Status & Aksi</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -120,7 +124,8 @@
 </div>
 
 <script>
-    const SCRIPT_URL = "https://script.google.com/macros/library/d/1_9hzHuPDWgMDszg7QeS00kK_n74U3Rb9ovmWnoLTWhY3wDPqn2vA8BAg/13;
+    // MASUKKAN URL WEB APP APPS SCRIPT BARU ANDA DI SINI
+    const SCRIPT_URL = "URL_WEB_APP_BARU_ANDA_DI_SINI";
 
     function openTab(tabId, btn) {
         document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
@@ -129,17 +134,17 @@
         btn.classList.add('active');
     }
 
-    // --- SCRIPT FORMULIR ---
+    // --- FORMULIR ---
     function dapatkanLokasi() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((pos) => {
                 document.getElementById('latitude').value = pos.coords.latitude;
                 document.getElementById('longitude').value = pos.coords.longitude;
-                document.getElementById('lokasiText').innerText = "Lokasi dikunci!";
+                document.getElementById('lokasiText').innerText = "Lokasi Berhasil Dikunci!";
                 const btn = document.getElementById('btnSubmit');
                 btn.disabled = false;
                 btn.style.background = "#2563eb";
-            });
+            }, () => alert("Gagal mengambil lokasi. Aktifkan GPS Anda."));
         }
     }
 
@@ -155,12 +160,14 @@
     document.getElementById('formPendaftaran').addEventListener('submit', async function(e) {
         e.preventDefault();
         const statusForm = document.getElementById('statusForm');
-        statusForm.innerText = "Mengirim data...";
+        statusForm.innerText = "Mengunggah data & berkas...";
+        statusForm.style.color = "blue";
         
         const berkasFile = document.getElementById('berkas').files[0];
         const fotoFile = document.getElementById('foto').files[0];
 
         const payload = {
+            action: "daftarBaru",
             nisn: document.getElementById('nisn').value,
             nik: document.getElementById('nik').value,
             no_kk: document.getElementById('no_kk').value,
@@ -179,108 +186,115 @@
         .then(res => res.json())
         .then(data => {
             if(data.result === 'success') {
-                statusForm.innerText = "Pendaftaran Berhasil! Jarak: " + data.jarak + " meter.";
+                statusForm.innerText = "Pendaftaran Berhasil! Jarak ke sekolah: " + data.jarak + " meter.";
+                statusForm.style.color = "green";
                 document.getElementById('formPendaftaran').reset();
+            } else {
+                statusForm.innerText = "Gagal: " + data.message;
+                statusForm.style.color = "red";
             }
         });
     });
 
-   // --- SCRIPT CEK STATUS (Perbaikan) ---
-function cekStatusSiswa() {
-    const nisnInput = document.getElementById('searchNisn').value.trim();
-    const hasilDiv = document.getElementById('hasilCekStatus');
-    
-    if(!nisnInput) return alert("Isi NISN terlebih dahulu!");
-    
-    hasilDiv.innerHTML = "Mencari data...";
-    
-    fetch(`${SCRIPT_URL}?action=cekStatus&nisn=${encodeURIComponent(nisnInput)}`)
-    .then(res => res.json())
-    .then(res => {
-        if(res.result === "success") {
-            let d = res.data;
-            let cssClass = d.status === "DITERIMA" ? "status-diterima" : (d.status === "DITOLAK" ? "status-ditolak" : "status-proses");
-            hasilDiv.innerHTML = `
-                <div class="status-box ${cssClass}">
-                    <p style="margin:0;">Nama: <b>${d.nama}</b> (${d.nisn})</p>
-                    <p style="margin:5px 0;">Jalur: ${d.jalur} | Jarak: ${d.jarak} M</p>
-                    <h3 style="margin:5px 0;">STATUS: ${d.status}</h3>
-                    <p style="margin:0; font-size:12px;">Catatan: ${d.catatan}</p>
-                </div>
-            `;
-        } else {
-            hasilDiv.innerHTML = `<div class="status-box status-ditolak">${res.message}</div>`;
-        }
-    })
-    .catch(err => {
-        console.error(err);
-        hasilDiv.innerHTML = `<div class="status-box status-ditolak">Gagal terhubung ke server. Pastikan URL Apps Script sudah benar.</div>`;
-    });
-}
+    // --- CEK STATUS ---
+    function cekStatusSiswa() {
+        const nisn = document.getElementById('searchNisn').value.trim();
+        const hasilDiv = document.getElementById('hasilCekStatus');
+        if(!nisn) return alert("Masukkan NISN terlebih dahulu!");
 
-// --- SCRIPT PETUGAS (Perbaikan) ---
-let currentPin = "";
+        hasilDiv.innerHTML = "<p style='text-align:center;'>Mencari data...</p>";
 
-function loadDataPetugas() {
-    const pin = document.getElementById('pinPetugas').value.trim() || currentPin;
-    if(!pin) return alert("Masukkan PIN Petugas!");
-
-    fetch(`${SCRIPT_URL}?action=getPetugasData&pin=${encodeURIComponent(pin)}`)
-    .then(res => res.json())
-    .then(res => {
-        if(res.result === "success") {
-            currentPin = pin;
-            document.getElementById('loginPetugasView').style.display = "none";
-            document.getElementById('panelPetugasView').style.display = "block";
-            
-            let tbody = document.querySelector('#tabelPetugas tbody');
-            tbody.innerHTML = "";
-            
-            if(res.data.length === 0) {
-                tbody.innerHTML = "<tr><td colspan='5' style='text-align:center;'>Belum ada pendaftar.</td></tr>";
-                return;
-            }
-
-            res.data.forEach(item => {
-                tbody.innerHTML += `
-                    <tr>
-                        <td><b>${item.nama}</b><br>NISN: ${item.nisn}</td>
-                        <td>${item.jalur}<br>${item.jarak} Meter</td>
-                        <td>
-                            ${item.berkas ? `<a href="${item.berkas}" target="_blank">Berkas</a>` : '-'} | 
-                            ${item.foto ? `<a href="${item.foto}" target="_blank">Foto</a>` : '-'}
-                        </td>
-                        <td><b>${item.status}</b></td>
-                        <td>
-                            <select onchange="updateStatusSiswa(${item.row}, this.value)">
-                                <option value="">-- Ubah Status --</option>
-                                <option value="DITERIMA">Diterima</option>
-                                <option value="DITOLAK">Ditolak</option>
-                                <option value="Sedang Diproses">Pending</option>
-                            </select>
-                        </td>
-                    </tr>
-                `;
-            });
-        } else {
-            alert(res.message);
-        }
-    })
-    .catch(err => {
-        console.error(err);
-        alert("Gagal memuat data petugas.");
-    });
-}
-    function updateStatusSiswa(row, newStatus) {
-        if(!newStatus) return;
         fetch(SCRIPT_URL, {
             method: 'POST',
-            body: JSON.stringify({ action: "updateStatus", pin: currentPin, row: row, status: newStatus })
+            body: JSON.stringify({ action: "cekStatus", nisn: nisn })
+        })
+        .then(res => res.json())
+        .then(res => {
+            if(res.result === "success") {
+                let d = res.data;
+                let css = d.status === "DITERIMA" ? "status-diterima" : (d.status === "DITOLAK" ? "status-ditolak" : "status-proses");
+                hasilDiv.innerHTML = `
+                    <div class="status-box ${css}">
+                        <p style="margin:0;">Nama: <b>${d.nama}</b> (NISN: ${d.nisn})</p>
+                        <p style="margin:5px 0;">Jalur: ${d.jalur} | Jarak: ${d.jarak} Meter</p>
+                        <h3 style="margin:8px 0;">STATUS: ${d.status}</h3>
+                        ${d.catatan ? `<p style="margin:0; font-size:12px;">Catatan: ${d.catatan}</p>` : ''}
+                    </div>
+                `;
+            } else {
+                hasilDiv.innerHTML = `<div class="status-box status-ditolak">${res.message}</div>`;
+            }
+        })
+        .catch(() => {
+            hasilDiv.innerHTML = `<div class="status-box status-ditolak">Terjadi kesalahan koneksi.</div>`;
+        });
+    }
+
+    // --- PETUGAS ---
+    let currentPin = "";
+    function loadDataPetugas() {
+        const pin = document.getElementById('pinPetugas').value.trim() || currentPin;
+        if(!pin) return alert("Masukkan PIN Petugas!");
+
+        fetch(SCRIPT_URL, {
+            method: 'POST',
+            body: JSON.stringify({ action: "getPetugasData", pin: pin })
+        })
+        .then(res => res.json())
+        .then(res => {
+            if(res.result === "success") {
+                currentPin = pin;
+                document.getElementById('loginPetugasView').style.display = "none";
+                document.getElementById('panelPetugasView').style.display = "block";
+                
+                let tbody = document.querySelector('#tabelPetugas tbody');
+                tbody.innerHTML = "";
+                
+                if(res.data.length === 0) {
+                    tbody.innerHTML = "<tr><td colspan='4' style='text-align:center;'>Belum ada pendaftar.</td></tr>";
+                    return;
+                }
+
+                res.data.forEach(item => {
+                    tbody.innerHTML += `
+                        <tr>
+                            <td><b>${item.nama}</b><br><small>NISN: ${item.nisn}</small></td>
+                            <td>${item.jalur}<br><small>${item.jarak} M</small></td>
+                            <td>
+                                ${item.berkas ? `<a href="${item.berkas}" target="_blank">Berkas</a>` : '-'}<br>
+                                ${item.foto ? `<a href="${item.foto}" target="_blank">Foto</a>` : '-'}
+                            </td>
+                            <td>
+                                <b>${item.status}</b><br>
+                                <select id="sel_${item.row}" style="margin-top:4px; font-size:11px; padding:4px;">
+                                    <option value="DITERIMA" ${item.status === 'DITERIMA' ? 'selected':''}>Diterima</option>
+                                    <option value="DITOLAK" ${item.status === 'DITOLAK' ? 'selected':''}>Ditolak</option>
+                                    <option value="Sedang Diproses" ${item.status === 'Sedang Diproses' ? 'selected':''}>Pending</option>
+                                </select>
+                                <input type="text" id="cat_${item.row}" value="${item.catatan}" placeholder="Catatan" style="font-size:11px; padding:4px; margin-top:3px;">
+                                <button class="btn-update" onclick="simpanStatusPetugas(${item.row})">Simpan</button>
+                            </td>
+                        </tr>
+                    `;
+                });
+            } else {
+                alert(res.message);
+            }
+        });
+    }
+
+    function simpanStatusPetugas(row) {
+        const st = document.getElementById(`sel_${row}`).value;
+        const ct = document.getElementById(`cat_${row}`).value;
+        
+        fetch(SCRIPT_URL, {
+            method: 'POST',
+            body: JSON.stringify({ action: "updateStatus", pin: currentPin, row: row, status: st, catatan: ct })
         })
         .then(res => res.json())
         .then(res => {
             if(res.result === 'success') {
-                alert("Status berhasil diperbarui!");
+                alert("Status Berhasil Diperbarui!");
                 loadDataPetugas();
             }
         });
