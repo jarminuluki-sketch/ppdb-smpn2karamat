@@ -185,73 +185,92 @@
         });
     });
 
-    // --- SCRIPT CEK STATUS ---
-    function cekStatusSiswa() {
-        const nisn = document.getElementById('searchNisn').value;
-        const hasilDiv = document.getElementById('hasilCekStatus');
-        if(!nisn) return alert("Isi NISN terlebih dahulu!");
-        
-        hasilDiv.innerHTML = "Mencari data...";
-        fetch(`${SCRIPT_URL}?action=cekStatus&nisn=${nisn}`)
-        .then(res => res.json())
-        .then(res => {
-            if(res.result === "success") {
-                let d = res.data;
-                let cssClass = d.status === "DITERIMA" ? "status-diterima" : (d.status === "DITOLAK" ? "status-ditolak" : "status-proses");
-                hasilDiv.innerHTML = `
-                    <div class="status-box ${cssClass}">
-                        <p style="margin:0;">Nama: <b>${d.nama}</b> (${d.nisn})</p>
-                        <p style="margin:5px 0;">Jalur: ${d.jalur} | Jarak: ${d.jarak} M</p>
-                        <h3 style="margin:5px 0;">STATUS: ${d.status}</h3>
-                    </div>
+   // --- SCRIPT CEK STATUS (Perbaikan) ---
+function cekStatusSiswa() {
+    const nisnInput = document.getElementById('searchNisn').value.trim();
+    const hasilDiv = document.getElementById('hasilCekStatus');
+    
+    if(!nisnInput) return alert("Isi NISN terlebih dahulu!");
+    
+    hasilDiv.innerHTML = "Mencari data...";
+    
+    fetch(`${SCRIPT_URL}?action=cekStatus&nisn=${encodeURIComponent(nisnInput)}`)
+    .then(res => res.json())
+    .then(res => {
+        if(res.result === "success") {
+            let d = res.data;
+            let cssClass = d.status === "DITERIMA" ? "status-diterima" : (d.status === "DITOLAK" ? "status-ditolak" : "status-proses");
+            hasilDiv.innerHTML = `
+                <div class="status-box ${cssClass}">
+                    <p style="margin:0;">Nama: <b>${d.nama}</b> (${d.nisn})</p>
+                    <p style="margin:5px 0;">Jalur: ${d.jalur} | Jarak: ${d.jarak} M</p>
+                    <h3 style="margin:5px 0;">STATUS: ${d.status}</h3>
+                    <p style="margin:0; font-size:12px;">Catatan: ${d.catatan}</p>
+                </div>
+            `;
+        } else {
+            hasilDiv.innerHTML = `<div class="status-box status-ditolak">${res.message}</div>`;
+        }
+    })
+    .catch(err => {
+        console.error(err);
+        hasilDiv.innerHTML = `<div class="status-box status-ditolak">Gagal terhubung ke server. Pastikan URL Apps Script sudah benar.</div>`;
+    });
+}
+
+// --- SCRIPT PETUGAS (Perbaikan) ---
+let currentPin = "";
+
+function loadDataPetugas() {
+    const pin = document.getElementById('pinPetugas').value.trim() || currentPin;
+    if(!pin) return alert("Masukkan PIN Petugas!");
+
+    fetch(`${SCRIPT_URL}?action=getPetugasData&pin=${encodeURIComponent(pin)}`)
+    .then(res => res.json())
+    .then(res => {
+        if(res.result === "success") {
+            currentPin = pin;
+            document.getElementById('loginPetugasView').style.display = "none";
+            document.getElementById('panelPetugasView').style.display = "block";
+            
+            let tbody = document.querySelector('#tabelPetugas tbody');
+            tbody.innerHTML = "";
+            
+            if(res.data.length === 0) {
+                tbody.innerHTML = "<tr><td colspan='5' style='text-align:center;'>Belum ada pendaftar.</td></tr>";
+                return;
+            }
+
+            res.data.forEach(item => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td><b>${item.nama}</b><br>NISN: ${item.nisn}</td>
+                        <td>${item.jalur}<br>${item.jarak} Meter</td>
+                        <td>
+                            ${item.berkas ? `<a href="${item.berkas}" target="_blank">Berkas</a>` : '-'} | 
+                            ${item.foto ? `<a href="${item.foto}" target="_blank">Foto</a>` : '-'}
+                        </td>
+                        <td><b>${item.status}</b></td>
+                        <td>
+                            <select onchange="updateStatusSiswa(${item.row}, this.value)">
+                                <option value="">-- Ubah Status --</option>
+                                <option value="DITERIMA">Diterima</option>
+                                <option value="DITOLAK">Ditolak</option>
+                                <option value="Sedang Diproses">Pending</option>
+                            </select>
+                        </td>
+                    </tr>
                 `;
-            } else {
-                hasilDiv.innerHTML = `<div class="status-box status-ditolak">${res.message}</div>`;
-            }
-        });
-    }
-
-    // --- SCRIPT PETUGAS ---
-    let currentPin = "";
-    function loadDataPetugas() {
-        const pin = document.getElementById('pinPetugas').value || currentPin;
-        fetch(`${SCRIPT_URL}?action=getPetugasData&pin=${pin}`)
-        .then(res => res.json())
-        .then(res => {
-            if(res.result === "success") {
-                currentPin = pin;
-                document.getElementById('loginPetugasView').style.display = "none";
-                document.getElementById('panelPetugasView').style.display = "block";
-                
-                let tbody = document.querySelector('#tabelPetugas tbody');
-                tbody.innerHTML = "";
-                res.data.forEach(item => {
-                    tbody.innerHTML += `
-                        <tr>
-                            <td><b>${item.nama}</b><br>NISN: ${item.nisn}</td>
-                            <td>${item.jalur}<br>${item.jarak} Meter</td>
-                            <td>
-                                <a href="${item.berkas}" target="_blank">Berkas</a> | 
-                                <a href="${item.foto}" target="_blank">Foto</a>
-                            </td>
-                            <td><b>${item.status}</b></td>
-                            <td>
-                                <select onchange="updateStatusSiswa(${item.row}, this.value)">
-                                    <option value="">-- Ubah --</option>
-                                    <option value="DITERIMA">Diterima</option>
-                                    <option value="DITOLAK">Ditolak</option>
-                                    <option value="Sedang Diproses">Pending</option>
-                                </select>
-                            </td>
-                        </tr>
-                    `;
-                });
-            } else {
-                alert(res.message);
-            }
-        });
-    }
-
+            });
+        } else {
+            alert(res.message);
+        }
+    })
+    .catch(err => {
+        console.error(err);
+        alert("Gagal memuat data petugas.");
+    });
+}
     function updateStatusSiswa(row, newStatus) {
         if(!newStatus) return;
         fetch(SCRIPT_URL, {
