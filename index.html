@@ -34,6 +34,7 @@
         th, td { border: 1px solid #e5e7eb; padding: 10px; text-align: left; }
         th { background: #f9fafb; }
         .btn-update { background: #059669; padding: 6px 10px; font-size: 12px; margin-top: 5px; }
+        .btn-sheets { background: #10b981; color: white; padding: 8px 12px; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 12px; display: inline-block; }
     </style>
 </head>
 <body>
@@ -102,9 +103,13 @@
         </div>
         
         <div id="panelPetugasView" style="display:none;">
-            <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
                 <h3 style="margin:0;">Data Pendaftar</h3>
-                <button onclick="loadDataPetugas()" style="width:auto; background:#059669; padding:8px 15px;">Refresh</button>
+                <div>
+                    <!-- Tombol Buka Spreadsheet Langsung -->
+                    <a href="URL_GOOGLE_SHEETS_ANDA_DI_SINI" target="_blank" class="btn-sheets">📊 Buka Google Sheets</a>
+                    <button onclick="loadDataPetugas()" style="width:auto; background:#059669; padding:8px 15px; display:inline-block;">Refresh</button>
+                </div>
             </div>
             <div style="overflow-x:auto;">
                 <table id="tabelPetugas">
@@ -124,7 +129,7 @@
 </div>
 
 <script>
-    // MASUKKAN URL WEB APP APPS SCRIPT BARU ANDA DI SINI
+    // 1. GANTI DENGAN URL WEB APP GOOGLE APPS SCRIPT ANDA
     const SCRIPT_URL = "URL_WEB_APP_BARU_ANDA_DI_SINI";
 
     function openTab(tabId, btn) {
