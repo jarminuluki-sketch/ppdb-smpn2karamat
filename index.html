@@ -17,6 +17,8 @@
         .tab-content.active { display: block; }
 
         .form-group { margin-bottom: 16px; }
+        .form-row { display: flex; gap: 10px; }
+        .form-row .form-group { flex: 1; }
         label { display: block; margin-bottom: 6px; font-weight: 600; color: #374151; font-size: 14px; }
         input, select { width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 6px; box-sizing: border-box; font-size: 14px; }
         button { width: 100%; padding: 12px; background: #2563eb; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 14px; }
@@ -56,6 +58,23 @@
             <div class="form-group"><label>NIK Siswa</label><input type="number" id="nik" required placeholder="16 digit NIK"></div>
             <div class="form-group"><label>No. KK</label><input type="number" id="no_kk" required placeholder="16 digit No. KK"></div>
             <div class="form-group"><label>Nama Lengkap</label><input type="text" id="nama" required placeholder="Sesuai ijazah SD"></div>
+            
+            <!-- ISIAN DATA FISIK SISWA -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Tinggi Badan (cm)</label>
+                    <input type="number" id="tinggi_badan" required placeholder="Contoh: 150">
+                </div>
+                <div class="form-group">
+                    <label>Berat Badan (kg)</label>
+                    <input type="number" id="berat_badan" required placeholder="Contoh: 45">
+                </div>
+                <div class="form-group">
+                    <label>Lingkar Kepala (cm)</label>
+                    <input type="number" id="lingkar_kepala" required placeholder="Contoh: 52">
+                </div>
+            </div>
+
             <div class="form-group">
                 <label>Jalur Pendaftaran</label>
                 <select id="jalur" required>
@@ -140,6 +159,7 @@
                     <thead>
                         <tr>
                             <th>Siswa</th>
+                            <th>Fisik</th>
                             <th>Jalur/Jarak</th>
                             <th>Berkas</th>
                             <th>Status & Aksi</th>
@@ -183,7 +203,7 @@
             const maxSize = maxMB * 1024 * 1024;
             if (file.size > maxSize) {
                 alert(`Ukuran file "${file.name}" terlalu besar!\nMaksimal ukuran yang diperbolehkan adalah ${maxMB} MB.`);
-                input.value = ""; // Reset input file jika melebihi batas
+                input.value = "";
             }
         }
     }
@@ -192,7 +212,6 @@
     function kompresGambar(file, maxWidth = 1000, quality = 0.7) {
         return new Promise((resolve, reject) => {
             if (!file || !file.type.match(/image.*/)) {
-                // File PDF dibaca langsung
                 if (file) {
                     const reader = new FileReader();
                     reader.onload = () => resolve(reader.result);
@@ -244,7 +263,6 @@
         statusForm.style.color = "blue";
 
         try {
-            // Kompresi otomatis di browser pendaftar
             const formulirBase64 = await kompresGambar(formulirFile);
             const aktaBase64 = await kompresGambar(aktaFile);
             const berkasBase64 = await kompresGambar(berkasFile);
@@ -256,6 +274,9 @@
                 nik: document.getElementById('nik').value,
                 no_kk: document.getElementById('no_kk').value,
                 nama: document.getElementById('nama').value,
+                tinggi_badan: document.getElementById('tinggi_badan').value,
+                berat_badan: document.getElementById('berat_badan').value,
+                lingkar_kepala: document.getElementById('lingkar_kepala').value,
                 jalur: document.getElementById('jalur').value,
                 wa: document.getElementById('wa').value,
                 formulirBase64: formulirBase64,
@@ -354,7 +375,7 @@
                 tbody.innerHTML = "";
                 
                 if(res.data.length === 0) {
-                    tbody.innerHTML = "<tr><td colspan='4' style='text-align:center;'>Belum ada pendaftar.</td></tr>";
+                    tbody.innerHTML = "<tr><td colspan='5' style='text-align:center;'>Belum ada pendaftar.</td></tr>";
                     return;
                 }
 
@@ -362,6 +383,7 @@
                     tbody.innerHTML += `
                         <tr>
                             <td><b>${item.nama}</b><br><small>NISN: ${item.nisn}</small></td>
+                            <td><small>TB: ${item.tinggi_badan} cm<br>BB: ${item.berat_badan} kg<br>LK: ${item.lingkar_kepala} cm</small></td>
                             <td>${item.jalur}<br><small>${item.jarak} M</small></td>
                             <td>
                                 ${item.formulir ? `<a href="${item.formulir}" target="_blank">Formulir</a>` : '-'}<br>
