@@ -22,6 +22,8 @@
         button { width: 100%; padding: 12px; background: #2563eb; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 14px; }
         button:disabled { background: #9ca3af; cursor: not-allowed; }
         
+        .file-hint { color: #6b7280; font-size: 12px; display: block; margin-top: 4px; }
+
         .status-box { padding: 15px; border-radius: 8px; margin-top: 15px; text-align: center; font-weight: bold; }
         .status-diterima { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
         .status-ditolak { background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; }
@@ -40,6 +42,7 @@
     <h2>PPDB Online</h2>
     <p class="subtitle">SMP Negeri 2 Karamat</p>
 
+    <!-- Navigasi Tab Menu -->
     <div class="tab-menu">
         <button class="tab-btn active" onclick="openTab('formTab', this)">Formulir</button>
         <button class="tab-btn" onclick="openTab('statusTab', this)">Cek Status</button>
@@ -64,13 +67,19 @@
                 </select>
             </div>
             <div class="form-group"><label>No WhatsApp Ortu</label><input type="tel" id="wa" required placeholder="08xxxxxxxxxx"></div>
+            
+            <!-- UNGGAH BERKAS -->
             <div class="form-group">
-                <label>Unggah Berkas Pendukung (Maks. 2MB)</label>
-                <input type="file" id="berkas" accept=".pdf,.jpg,.jpeg,.png" required>
+                <label>Unggah Berkas Pendukung (PDF/Gambar)</label>
+                <input type="file" id="berkas" accept=".pdf,.jpg,.jpeg,.png" required onchange="validasiUkuranFile(this, 2)">
+                <small class="file-hint">* Format: PDF, JPG, PNG. <strong>Maksimal ukuran file: 2 MB</strong></small>
             </div>
+            
+            <!-- UNGGAH FOTO -->
             <div class="form-group">
-                <label>Unggah Swafoto Siswa (Otomatis Dikompres)</label>
-                <input type="file" id="foto" accept="image/*" required>
+                <label>Unggah Swafoto Siswa</label>
+                <input type="file" id="foto" accept="image/*" required onchange="validasiUkuranFile(this, 2)">
+                <small class="file-hint">* Format: Gambar (JPG/PNG). <strong>Maksimal ukuran file: 2 MB</strong> (Dikompres otomatis)</small>
             </div>
             
             <div class="form-group">
@@ -131,7 +140,7 @@
 
 <script>
     // MASUKKAN URL WEB APP GOOGLE APPS SCRIPT ANDA DI SINI
-    const SCRIPT_URL = "URL_WEB_APP_BARU_ANDA_DI_SINI";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwSMN_1MJ115rU-v1HMY8RsO9ChOEY2wEcdBxCZC3UFuSUWOvPULf8qd8epvFbv2xv2/exec";
 
     function openTab(tabId, btn) {
         document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
@@ -153,11 +162,23 @@
         }
     }
 
-    // FUNGSI KOMPRESI GAMBAR OTOMATIS
+    // --- VALIDASI UKURAN FILE LANGSUNG SAAT DIPILIH ---
+    function validasiUkuranFile(input, maxMB) {
+        const file = input.files[0];
+        if (file) {
+            const maxSize = maxMB * 1024 * 1024;
+            if (file.size > maxSize) {
+                alert(`Ukuran file "${file.name}" terlalu besar!\nMaksimal ukuran yang diperbolehkan adalah ${maxMB} MB.`);
+                input.value = ""; // Reset input file jika melebih batas
+            }
+        }
+    }
+
+    // --- FUNGSI KOMPRESI GAMBAR OTOMATIS ---
     function kompresGambar(file, maxWidth = 1000, quality = 0.7) {
         return new Promise((resolve, reject) => {
             if (!file.type.match(/image.*/)) {
-                // Jika file PDF, langsung dibaca tanpa dikompres
+                // File PDF dibaca langsung
                 const reader = new FileReader();
                 reader.onload = () => resolve(reader.result);
                 reader.onerror = error => reject(error);
@@ -182,7 +203,6 @@
                 const ctx = canvas.getContext('2d');
                 ctx.drawImage(img, 0, 0, width, height);
 
-                // Ekspor ke format JPEG terkompresi
                 const base64 = canvas.toDataURL('image/jpeg', quality);
                 resolve(base64);
             };
@@ -198,19 +218,13 @@
         const berkasFile = document.getElementById('berkas').files[0];
         const fotoFile = document.getElementById('foto').files[0];
 
-        // Validasi Ukuran File PDF (Maksimal 2MB)
-        if (berkasFile.size > 2 * 1024 * 1024) {
-            alert("Ukuran Berkas Pendukung terlalu besar! Maksimal 2MB.");
-            return;
-        }
-
         btnSubmit.disabled = true;
         btnSubmit.innerText = "Memproses & Mengirim...";
         statusForm.innerText = "Mengompres berkas & mengunggah...";
         statusForm.style.color = "blue";
 
         try {
-            // Kompresi File di Browser
+            // Kompresi otomatis di browser pendaftar
             const berkasBase64 = await kompresGambar(berkasFile);
             const fotoBase64 = await kompresGambar(fotoFile);
 
@@ -249,7 +263,7 @@
             .catch(() => {
                 btnSubmit.disabled = false;
                 btnSubmit.innerText = "2. Kirim Pendaftaran";
-                statusForm.innerText = "Terjadi kesalahan saat pengiriman. Coba lagi.";
+                statusForm.innerText = "Terjadi kesalahan koneksi. Coba lagi.";
                 statusForm.style.color = "red";
             });
 
