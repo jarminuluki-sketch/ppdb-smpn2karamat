@@ -59,7 +59,7 @@
             <div class="form-group"><label>No. KK</label><input type="number" id="no_kk" required placeholder="16 digit No. KK"></div>
             <div class="form-group"><label>Nama Lengkap</label><input type="text" id="nama" required placeholder="Sesuai ijazah SD"></div>
             
-            <!-- BARIS BARU: TEMPAT & TANGGAL LAHIR -->
+            <!-- TEMPAT & TANGGAL LAHIR -->
             <div class="form-row">
                 <div class="form-group">
                     <label>Tempat Lahir</label>
@@ -71,7 +71,7 @@
                 </div>
             </div>
 
-            <!-- BARIS BARU: JENIS KELAMIN -->
+            <!-- JENIS KELAMIN -->
             <div class="form-group">
                 <label>Jenis Kelamin</label>
                 <select id="jenis_kelamin" required>
@@ -81,7 +81,7 @@
                 </select>
             </div>
 
-            <!-- BARIS BARU: HOBI & CITA-CITA -->
+            <!-- HOBI & CITA-CITA -->
             <div class="form-row">
                 <div class="form-group">
                     <label>Hobi</label>
@@ -125,6 +125,13 @@
             <div class="form-group">
                 <label>Unggah Formulir Pendaftaran (PDF/Gambar)</label>
                 <input type="file" id="formulir_file" accept=".pdf,.jpg,.jpeg,.png" required onchange="validasiUkuranFile(this, 2)">
+                <small class="file-hint">* Format: PDF, JPG, PNG. <strong>Maksimal ukuran file: 2 MB</strong></small>
+            </div>
+
+            <!-- UNGGAH KARTU KELUARGA (BARU) -->
+            <div class="form-group">
+                <label>Unggah Kartu Keluarga (PDF/Gambar)</label>
+                <input type="file" id="kk_file" accept=".pdf,.jpg,.jpeg,.png" required onchange="validasiUkuranFile(this, 2)">
                 <small class="file-hint">* Format: PDF, JPG, PNG. <strong>Maksimal ukuran file: 2 MB</strong></small>
             </div>
 
@@ -208,7 +215,7 @@
 
 <script>
     // MASUKKAN URL WEB APP GOOGLE APPS SCRIPT ANDA DI SINI
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyDNvsviqUXF_qiTg3ieCsaI7JHFiYQzhhL0qe6-nUXCzs5b_aoM6lhKWAmcLNT_WgZ/exec";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw6K320El1pEhSfsvX0JTeM3B28WEH5LW8JPkOePY_D6DLrADnNifPZxtP3ecp1zlQ/exec";
 
     function openTab(tabId, btn) {
         document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
@@ -285,6 +292,7 @@
         const statusForm = document.getElementById('statusForm');
 
         const formulirFile = document.getElementById('formulir_file').files[0];
+        const kkFile = document.getElementById('kk_file').files[0];
         const aktaFile = document.getElementById('akta').files[0];
         const ijazahFile = document.getElementById('ijazah').files[0];
         const fotoFile = document.getElementById('foto').files[0];
@@ -296,6 +304,7 @@
 
         try {
             const formulirBase64 = await kompresGambar(formulirFile);
+            const kkBase64 = await kompresGambar(kkFile);
             const aktaBase64 = await kompresGambar(aktaFile);
             const ijazahBase64 = await kompresGambar(ijazahFile);
             const fotoBase64 = await kompresGambar(fotoFile);
@@ -319,6 +328,9 @@
                 formulirBase64: formulirBase64,
                 formulirExt: formulirFile.name.split('.').pop(),
                 formulirMime: formulirFile.type,
+                kkBase64: kkBase64,
+                kkExt: kkFile.name.split('.').pop(),
+                kkMime: kkFile.type,
                 aktaBase64: aktaBase64,
                 aktaExt: aktaFile.name.split('.').pop(),
                 aktaMime: aktaFile.type,
@@ -430,6 +442,7 @@
                             <td>${item.jalur}<br><small>${item.jarak} M</small></td>
                             <td>
                                 ${item.formulir ? `<a href="${item.formulir}" target="_blank">Formulir</a>` : '-'}<br>
+                                ${item.kk ? `<a href="${item.kk}" target="_blank">KK</a>` : '-'}<br>
                                 ${item.akta ? `<a href="${item.akta}" target="_blank">Akta</a>` : '-'}<br>
                                 ${item.ijazah ? `<a href="${item.ijazah}" target="_blank">Ijazah/SKHU</a>` : '-'}<br>
                                 ${item.foto ? `<a href="${item.foto}" target="_blank">Foto</a>` : '-'}
