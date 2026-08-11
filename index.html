@@ -59,6 +59,40 @@
             <div class="form-group"><label>No. KK</label><input type="number" id="no_kk" required placeholder="16 digit No. KK"></div>
             <div class="form-group"><label>Nama Lengkap</label><input type="text" id="nama" required placeholder="Sesuai ijazah SD"></div>
             
+            <!-- BARIS BARU: TEMPAT & TANGGAL LAHIR -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Tempat Lahir</label>
+                    <input type="text" id="tempat_lahir" required placeholder="Kota/Kabupaten lahir">
+                </div>
+                <div class="form-group">
+                    <label>Tanggal Lahir</label>
+                    <input type="date" id="tanggal_lahir" required>
+                </div>
+            </div>
+
+            <!-- BARIS BARU: JENIS KELAMIN -->
+            <div class="form-group">
+                <label>Jenis Kelamin</label>
+                <select id="jenis_kelamin" required>
+                    <option value="">-- Pilih Jenis Kelamin --</option>
+                    <option value="Laki-laki">Laki-laki</option>
+                    <option value="Perempuan">Perempuan</option>
+                </select>
+            </div>
+
+            <!-- BARIS BARU: HOBI & CITA-CITA -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Hobi</label>
+                    <input type="text" id="hobi" required placeholder="Contoh: Olahraga, Membaca">
+                </div>
+                <div class="form-group">
+                    <label>Cita-Cita</label>
+                    <input type="text" id="cita_cita" required placeholder="Contoh: Guru, Dokter, TNI">
+                </div>
+            </div>
+
             <!-- ISIAN DATA FISIK SISWA -->
             <div class="form-row">
                 <div class="form-group">
@@ -158,7 +192,7 @@
                 <table id="tabelPetugas">
                     <thead>
                         <tr>
-                            <th>Siswa</th>
+                            <th>Siswa & Bio</th>
                             <th>Fisik</th>
                             <th>Jalur/Jarak</th>
                             <th>Berkas</th>
@@ -174,7 +208,7 @@
 
 <script>
     // MASUKKAN URL WEB APP GOOGLE APPS SCRIPT ANDA DI SINI
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbztnj0tLRe9XqYi1eqf_EmbA0L3RjvUSLXKiRUYQWlxIZ6Lp2_Yp1wPRkMxN33db2d5/exec";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyDNvsviqUXF_qiTg3ieCsaI7JHFiYQzhhL0qe6-nUXCzs5b_aoM6lhKWAmcLNT_WgZ/exec";
 
     function openTab(tabId, btn) {
         document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
@@ -196,7 +230,6 @@
         }
     }
 
-    // --- VALIDASI UKURAN FILE LANGSUNG SAAT DIPILIH ---
     function validasiUkuranFile(input, maxMB) {
         const file = input.files[0];
         if (file) {
@@ -208,7 +241,6 @@
         }
     }
 
-    // --- FUNGSI KOMPRESI GAMBAR OTOMATIS ---
     function kompresGambar(file, maxWidth = 1000, quality = 0.7) {
         return new Promise((resolve, reject) => {
             if (!file || !file.type.match(/image.*/)) {
@@ -274,6 +306,11 @@
                 nik: document.getElementById('nik').value,
                 no_kk: document.getElementById('no_kk').value,
                 nama: document.getElementById('nama').value,
+                tempat_lahir: document.getElementById('tempat_lahir').value,
+                tanggal_lahir: document.getElementById('tanggal_lahir').value,
+                jenis_kelamin: document.getElementById('jenis_kelamin').value,
+                hobi: document.getElementById('hobi').value,
+                cita_cita: document.getElementById('cita_cita').value,
                 tinggi_badan: document.getElementById('tinggi_badan').value,
                 berat_badan: document.getElementById('berat_badan').value,
                 lingkar_kepala: document.getElementById('lingkar_kepala').value,
@@ -382,7 +419,13 @@
                 res.data.forEach(item => {
                     tbody.innerHTML += `
                         <tr>
-                            <td><b>${item.nama}</b><br><small>NISN: ${item.nisn}</small></td>
+                            <td>
+                                <b>${item.nama}</b><br>
+                                <small>NISN: ${item.nisn}</small><br>
+                                <small>TTL: ${item.tempat_lahir}, ${item.tanggal_lahir}</small><br>
+                                <small>JK: ${item.jenis_kelamin}</small><br>
+                                <small>Hobi/Cita: ${item.hobi} / ${item.cita_cita}</small>
+                            </td>
                             <td><small>TB: ${item.tinggi_badan} cm<br>BB: ${item.berat_badan} kg<br>LK: ${item.lingkar_kepala} cm</small></td>
                             <td>${item.jalur}<br><small>${item.jarak} M</small></td>
                             <td>
