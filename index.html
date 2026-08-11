@@ -89,6 +89,7 @@
         <button class="tab-btn" onclick="openTab('petugasTab', this)">Menu Petugas</button>
     </div>
 
+    <!-- TAB 1: FORMULIR PENDAFTARAN -->
     <div id="formTab" class="tab-content active">
         <form id="formPendaftaran">
             <div class="section-title">📌 DATA CALON SISWA</div>
@@ -182,32 +183,32 @@
 
             <div class="form-group">
                 <label>Unggah Formulir Pendaftaran (PDF/Gambar)</label>
-                <input type="file" id="formulir_file" accept=".pdf,.jpg,.jpeg,.png" required onchange="validasiUkuranFile(this, 2)">
-                <small class="file-hint">* Maksimal 2 MB</small>
+                <input type="file" id="formulir_file" accept=".pdf,.jpg,.jpeg,.png" required onchange="validasiUkuranFile(this, 5)">
+                <small class="file-hint">* Maksimal 5 MB</small>
             </div>
 
             <div class="form-group">
                 <label>Unggah Kartu Keluarga (PDF/Gambar)</label>
-                <input type="file" id="kk_file" accept=".pdf,.jpg,.jpeg,.png" required onchange="validasiUkuranFile(this, 2)">
-                <small class="file-hint">* Maksimal 2 MB</small>
+                <input type="file" id="kk_file" accept=".pdf,.jpg,.jpeg,.png" required onchange="validasiUkuranFile(this, 5)">
+                <small class="file-hint">* Maksimal 5 MB</small>
             </div>
 
             <div class="form-group">
                 <label>Unggah Akta Kelahiran (PDF/Gambar)</label>
-                <input type="file" id="akta" accept=".pdf,.jpg,.jpeg,.png" required onchange="validasiUkuranFile(this, 2)">
-                <small class="file-hint">* Maksimal 2 MB</small>
+                <input type="file" id="akta" accept=".pdf,.jpg,.jpeg,.png" required onchange="validasiUkuranFile(this, 5)">
+                <small class="file-hint">* Maksimal 5 MB</small>
             </div>
 
             <div class="form-group">
                 <label>Unggah Ijazah / SKHU (PDF/Gambar)</label>
-                <input type="file" id="ijazah" accept=".pdf,.jpg,.jpeg,.png" required onchange="validasiUkuranFile(this, 2)">
-                <small class="file-hint">* Maksimal 2 MB</small>
+                <input type="file" id="ijazah" accept=".pdf,.jpg,.jpeg,.png" required onchange="validasiUkuranFile(this, 5)">
+                <small class="file-hint">* Maksimal 5 MB</small>
             </div>
             
             <div class="form-group">
                 <label>Unggah Swafoto Siswa</label>
-                <input type="file" id="foto" accept="image/*" required onchange="validasiUkuranFile(this, 2)">
-                <small class="file-hint">* Maksimal 2 MB</small>
+                <input type="file" id="foto" accept="image/*" required onchange="validasiUkuranFile(this, 5)">
+                <small class="file-hint">* Maksimal 5 MB</small>
             </div>
             
             <div class="form-group" style="margin-top:20px;">
@@ -221,6 +222,7 @@
         <div id="statusForm" style="margin-top:15px; text-align:center; font-weight:bold;"></div>
     </div>
 
+    <!-- TAB 2: CEK STATUS -->
     <div id="statusTab" class="tab-content">
         <div class="form-group">
             <label>Masukkan NISN Calon Siswa</label>
@@ -230,6 +232,7 @@
         <div id="hasilCekStatus"></div>
     </div>
 
+    <!-- TAB 3: MENU PETUGAS -->
     <div id="petugasTab" class="tab-content">
         <div id="loginPetugasView">
             <div class="form-group">
@@ -251,7 +254,7 @@
                             <th>Siswa & Bio</th>
                             <th>Data Orang Tua</th>
                             <th>Jalur/Jarak</th>
-                            <th>Berkas</th>
+                            <th>Berkas Drive</th>
                             <th>Status & Aksi</th>
                         </tr>
                     </thead>
@@ -263,6 +266,7 @@
 </div>
 
 <script>
+    // Navigation Tab Control
     function openTab(tabId, btn) {
         document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -270,6 +274,7 @@
         btn.classList.add('active');
     }
 
+    // Geolocation Handler
     function dapatkanLokasi() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((pos) => {
@@ -279,12 +284,13 @@
                 const btn = document.getElementById('btnSubmit');
                 btn.disabled = false;
                 btn.style.background = "#2563eb";
-            }, () => alert("Gagal mengambil lokasi. Pastikan GPS/Izin Lokasi aktif!"));
+            }, () => alert("Gagal mengambil lokasi. Pastikan GPS & izin lokasi browser aktif!"));
         } else {
-            alert("Browser tidak mendukung geolokasi.");
+            alert("Browser tidak mendukung penguncian geolokasi.");
         }
     }
 
+    // Validasi Ukuran File Sebelum Diunggah
     function validasiUkuranFile(input, maxMB) {
         const file = input.files[0];
         if (file && file.size > maxMB * 1024 * 1024) {
@@ -293,13 +299,16 @@
         }
     }
 
-    function kompresGambar(file, maxWidth = 1000, quality = 0.7) {
-        return new Promise((resolve, reject) => {
+    // FUNGSI OPTIMASI: Kompresi Gambar Cepat (Lebar Max 800px & Kualitas 0.6)
+    function kompresGambar(file, maxWidth = 800, quality = 0.6) {
+        return new Promise((resolve) => {
             if (!file) return resolve("");
+            
+            // Jika file PDF, langsung konversi Base64 tanpa kompresi gambar
             if (!file.type.match(/image.*/)) {
                 const reader = new FileReader();
                 reader.onload = () => resolve(reader.result);
-                reader.onerror = error => reject(error);
+                reader.onerror = () => resolve("");
                 reader.readAsDataURL(file);
                 return;
             }
@@ -318,12 +327,15 @@
                 canvas.height = height;
                 const ctx = canvas.getContext('2d');
                 ctx.drawImage(img, 0, 0, width, height);
+                
+                URL.revokeObjectURL(img.src); // Membersihkan RAM browser
                 resolve(canvas.toDataURL('image/jpeg', quality));
             };
-            img.onerror = error => reject(error);
+            img.onerror = () => resolve("");
         });
     }
 
+    // Form Submit Handler (Parallel Processing untuk Koneksi Lambat)
     document.getElementById('formPendaftaran').addEventListener('submit', async function(e) {
         e.preventDefault();
         const btnSubmit = document.getElementById('btnSubmit');
@@ -331,10 +343,33 @@
 
         btnSubmit.disabled = true;
         btnSubmit.innerText = "Memproses & Mengirim...";
-        statusForm.innerText = "Mengompres berkas & mengunggah...";
-        statusForm.style.color = "blue";
+        statusForm.innerText = "Mengompres 5 berkas secara cepat...";
+        statusForm.style.color = "#2563eb";
 
         try {
+            const fileFormulir = document.getElementById('formulir_file').files[0];
+            const fileKK = document.getElementById('kk_file').files[0];
+            const fileAkta = document.getElementById('akta').files[0];
+            const fileIjazah = document.getElementById('ijazah').files[0];
+            const fileFoto = document.getElementById('foto').files[0];
+
+            // KOMPRESI PARALEL (Semua file diproses sekaligus)
+            const [
+                formulirBase64,
+                kkBase64,
+                aktaBase64,
+                ijazahBase64,
+                fotoBase64
+            ] = await Promise.all([
+                kompresGambar(fileFormulir),
+                kompresGambar(fileKK),
+                kompresGambar(fileAkta),
+                kompresGambar(fileIjazah),
+                kompresGambar(fileFoto)
+            ]);
+
+            statusForm.innerText = "Menyimpan data dan berkas ke Google Drive...";
+
             const payload = {
                 action: "daftarBaru",
                 nisn: document.getElementById('nisn').value,
@@ -365,15 +400,15 @@
 
                 wa: document.getElementById('wa').value,
                 
-                formulirBase64: await kompresGambar(document.getElementById('formulir_file').files[0]),
-                formulirExt: document.getElementById('formulir_file').files[0].name.split('.').pop(),
-                kkBase64: await kompresGambar(document.getElementById('kk_file').files[0]),
-                kkExt: document.getElementById('kk_file').files[0].name.split('.').pop(),
-                aktaBase64: await kompresGambar(document.getElementById('akta').files[0]),
-                aktaExt: document.getElementById('akta').files[0].name.split('.').pop(),
-                ijazahBase64: await kompresGambar(document.getElementById('ijazah').files[0]),
-                ijazahExt: document.getElementById('ijazah').files[0].name.split('.').pop(),
-                fotoBase64: await kompresGambar(document.getElementById('foto').files[0]),
+                formulirBase64: formulirBase64,
+                formulirExt: fileFormulir ? fileFormulir.name.split('.').pop() : '',
+                kkBase64: kkBase64,
+                kkExt: fileKK ? fileKK.name.split('.').pop() : '',
+                aktaBase64: aktaBase64,
+                aktaExt: fileAkta ? fileAkta.name.split('.').pop() : '',
+                ijazahBase64: ijazahBase64,
+                ijazahExt: fileIjazah ? fileIjazah.name.split('.').pop() : '',
+                fotoBase64: fotoBase64,
                 latitude: parseFloat(document.getElementById('latitude').value),
                 longitude: parseFloat(document.getElementById('longitude').value)
             };
@@ -384,12 +419,12 @@
                     .withFailureHandler(() => {
                         btnSubmit.disabled = false;
                         btnSubmit.innerText = "2. Kirim Pendaftaran";
-                        statusForm.innerText = "Terjadi kesalahan sistem/koneksi!";
+                        statusForm.innerText = "Terjadi gangguan jaringan saat mengunggah!";
                         statusForm.style.color = "red";
                     })
                     .doPost({ postData: { contents: JSON.stringify(payload) } });
             } else {
-                statusForm.innerText = "Error: Buka web app langsung melalui tautan resmi Google Apps Script!";
+                statusForm.innerText = "Sistem Error: Jalankan aplikasi via Web App resmi Google Apps Script!";
                 btnSubmit.disabled = false;
                 btnSubmit.innerText = "2. Kirim Pendaftaran";
             }
@@ -397,7 +432,8 @@
         } catch (err) {
             btnSubmit.disabled = false;
             btnSubmit.innerText = "2. Kirim Pendaftaran";
-            alert("Gagal memproses file pendaftaran.");
+            statusForm.innerText = "Gagal memproses pendaftaran!";
+            statusForm.style.color = "red";
         }
     });
 
@@ -407,7 +443,7 @@
         btnSubmit.disabled = false;
         btnSubmit.innerText = "2. Kirim Pendaftaran";
         if(res.result === 'success') {
-            statusForm.innerText = "Pendaftaran Berhasil! Jarak ke sekolah: " + res.jarak + " meter.";
+            statusForm.innerText = "Pendaftaran Berhasil & Berkas Tersimpan di Drive! Jarak: " + res.jarak + " meter.";
             statusForm.style.color = "green";
             document.getElementById('formPendaftaran').reset();
             document.getElementById('btnSubmit').disabled = true;
@@ -418,6 +454,7 @@
         }
     }
 
+    // Cek Status Pendaftaran Siswa
     function cekStatusSiswa() {
         const nisn = document.getElementById('searchNisn').value.trim();
         const hasilDiv = document.getElementById('hasilCekStatus');
@@ -447,6 +484,7 @@
         }
     }
 
+    // Menu Petugas Logika
     let currentPin = "";
     function loadDataPetugas() {
         const pin = document.getElementById('pinPetugas').value.trim() || currentPin;
