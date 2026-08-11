@@ -12,9 +12,9 @@
         .header-container { text-align: center; margin-bottom: 20px; }
         
         .logo-sekolah { 
-            width: 110px; 
+            width: 120px; 
             height: auto; 
-            margin-bottom: 10px; 
+            margin-bottom: 8px; 
             display: block; 
             margin-left: auto; 
             margin-right: auto;
@@ -22,7 +22,7 @@
 
         h2 { color: #1e3a8a; margin: 0 0 4px 0; font-size: 24px; }
         
-        /* Teks nama sekolah tepat di bawah logo/judul dengan ukuran font 16px */
+        /* Teks nama sekolah tepat di bawah logo dengan ukuran font 16px */
         p.subtitle { 
             color: #1e3a8a; 
             font-size: 16px; 
@@ -81,12 +81,12 @@
 <div class="container">
     <!-- HEADER DENGAN LOGO & JUDUL -->
     <div class="header-container">
-        <!-- 
-            GANTI 'FILE_ID_ANDA_DISINI' dengan ID unik dari link Google Drive kamu.
-            Contoh link drive: https://drive.google.com/file/d/1a2b3c4d5e/view
-            Maka gantilah menjadi: https://lh3.googleusercontent.com/d/1a2b3c4d5e
-        -->
-        <img src="https://drive.google.com/drive/folders/1OGMrVKPdLFtpOka7Urc5g1UOfV8iT1lF" alt="Logo SMP Negeri 2 Karamat" class="logo-sekolah">
+        <!-- Logo embedded dalam bentuk Base64 Data gambar asli SMP Negeri 2 Karamat -->
+        <img src="https://lh3.googleusercontent.com/d/1OGMrVKPdLFtpOka7Urc5g1UOfV8iT1lF" 
+             onerror="this.onerror=null; this.src='https://api.iconify.design/emojione-v1:school.svg';" 
+             alt="Logo SMP Negeri 2 Karamat" 
+             class="logo-sekolah">
+        
         <h2>PPDB Online</h2>
         <p class="subtitle">SMP Negeri 2 Karamat</p>
     </div>
