@@ -31,7 +31,7 @@
             margin: 0 0 15px 0; 
         }
 
-        /* RUNNING TEXT */
+        /* RUNNING TEXT (TEKS BERJALAN) */
         .running-text-container {
             background-color: #1e3a8a;
             color: #ffffff;
@@ -80,10 +80,12 @@
 <body>
 
 <div class="container">
-    <!-- HEADER DENGAN LOGO & JUDUL -->
+    <!-- HEADER DENGAN LOGO GOOGLE DRIVE DIRECT LINK -->
     <div class="header-container">
-        <!-- Element Gambar Logo -->
-        <img id="logoSekolah" alt="Logo SMP Negeri 2 Karamat" class="logo-sekolah">
+        <img id="logoSekolah" 
+             src="https://lh3.googleusercontent.com/d/1eoGamxmD0zINXITkYiDxcmQJVeSkltOa" 
+             alt="Logo SMP Negeri 2 Karamat" 
+             class="logo-sekolah">
         <h2>PPDB Online</h2>
         <p class="subtitle">SMP Negeri 2 Karamat</p>
     </div>
@@ -318,22 +320,6 @@
 </div>
 
 <script>
-    // FUNGSI UTAMA UNTUK MENGAMBIL LOGO OTOMATIS DARI GOOGLE DRIVE
-    window.addEventListener('DOMContentLoaded', () => {
-        google.script.run
-            .withSuccessHandler(function(base64Image) {
-                if (base64Image) {
-                    document.getElementById('logoSekolah').src = base64Image;
-                } else {
-                    console.error("Gagal memuat logo dari Google Drive. Pastikan akses file di Drive diset 'Siapa saja yang memiliki link'");
-                }
-            })
-            .withFailureHandler(function(err) {
-                console.error("Error panggil getLogoBase64:", err);
-            })
-            .getLogoBase64();
-    });
-
     function openTab(tabId, btn) {
         document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -402,7 +388,7 @@
         });
     }
 
-    // FORM SUBMIT
+    // FORM SUBMIT DENGAN HELPER FETCH (SAFE UNTUK LOCAL & ONLINE)
     document.getElementById('formPendaftaran').addEventListener('submit', async function(e) {
         e.preventDefault();
         const btnSubmit = document.getElementById('btnSubmit');
@@ -470,28 +456,23 @@
                 longitude: parseFloat(document.getElementById('longitude').value)
             };
 
-            google.script.run
-                .withSuccessHandler(function(res) {
-                    btnSubmit.disabled = false;
-                    btnSubmit.innerText = "2. Kirim Pendaftaran";
-                    if(res.result === 'success') {
-                        statusForm.innerText = "Pendaftaran Berhasil! Jarak ke sekolah: " + res.jarak + " meter.";
-                        statusForm.style.color = "green";
-                        document.getElementById('formPendaftaran').reset();
-                        document.getElementById('btnSubmit').disabled = true;
-                        document.getElementById('lokasiText').innerText = "";
-                    } else {
-                        statusForm.innerText = "Gagal: " + res.message;
+            if (typeof google !== 'undefined' && google.script && google.script.run) {
+                google.script.run
+                    .withSuccessHandler(function(res) {
+                        handleResponseForm(res);
+                    })
+                    .withFailureHandler(function(err) {
+                        btnSubmit.disabled = false;
+                        btnSubmit.innerText = "2. Kirim Pendaftaran";
+                        statusForm.innerText = "Terjadi kesalahan koneksi!";
                         statusForm.style.color = "red";
-                    }
-                })
-                .withFailureHandler(function(err) {
-                    btnSubmit.disabled = false;
-                    btnSubmit.innerText = "2. Kirim Pendaftaran";
-                    statusForm.innerText = "Terjadi kesalahan koneksi!";
-                    statusForm.style.color = "red";
-                })
-                .doPost({ postData: { contents: JSON.stringify(payload) } });
+                    })
+                    .doPost({ postData: { contents: JSON.stringify(payload) } });
+            } else {
+                statusForm.innerText = "Error: Buka web app langsung melalui tautan resmi Google Apps Script!";
+                btnSubmit.disabled = false;
+                btnSubmit.innerText = "2. Kirim Pendaftaran";
+            }
 
         } catch (err) {
             btnSubmit.disabled = false;
@@ -499,6 +480,23 @@
             alert("Gagal memproses file.");
         }
     });
+
+    function handleResponseForm(res) {
+        const btnSubmit = document.getElementById('btnSubmit');
+        const statusForm = document.getElementById('statusForm');
+        btnSubmit.disabled = false;
+        btnSubmit.innerText = "2. Kirim Pendaftaran";
+        if(res.result === 'success') {
+            statusForm.innerText = "Pendaftaran Berhasil! Jarak ke sekolah: " + res.jarak + " meter.";
+            statusForm.style.color = "green";
+            document.getElementById('formPendaftaran').reset();
+            document.getElementById('btnSubmit').disabled = true;
+            document.getElementById('lokasiText').innerText = "";
+        } else {
+            statusForm.innerText = "Gagal: " + res.message;
+            statusForm.style.color = "red";
+        }
+    }
 
     // CEK STATUS
     function cekStatusSiswa() {
@@ -508,24 +506,28 @@
 
         hasilDiv.innerHTML = "<p style='text-align:center;'>Mencari data...</p>";
 
-        google.script.run
-            .withSuccessHandler(function(res) {
-                if(res.result === "success") {
-                    let d = res.data;
-                    let css = d.status === "DITERIMA" ? "status-diterima" : (d.status === "DITOLAK" ? "status-ditolak" : "status-proses");
-                    hasilDiv.innerHTML = `
-                        <div class="status-box ${css}">
-                            <p style="margin:0;">Nama: <b>${d.nama}</b> (NISN: ${d.nisn})</p>
-                            <p style="margin:5px 0;">Jalur: ${d.jalur} | Jarak: ${d.jarak} Meter</p>
-                            <h3 style="margin:8px 0;">STATUS: ${d.status}</h3>
-                            ${d.catatan ? `<p style="margin:0; font-size:12px;">Catatan: ${d.catatan}</p>` : ''}
-                        </div>
-                    `;
-                } else {
-                    hasilDiv.innerHTML = `<div class="status-box status-ditolak">${res.message}</div>`;
-                }
-            })
-            .doPost({ postData: { contents: JSON.stringify({ action: "cekStatus", nisn: nisn }) } });
+        if (typeof google !== 'undefined' && google.script && google.script.run) {
+            google.script.run
+                .withSuccessHandler(function(res) {
+                    if(res.result === "success") {
+                        let d = res.data;
+                        let css = d.status === "DITERIMA" ? "status-diterima" : (d.status === "DITOLAK" ? "status-ditolak" : "status-proses");
+                        hasilDiv.innerHTML = `
+                            <div class="status-box ${css}">
+                                <p style="margin:0;">Nama: <b>${d.nama}</b> (NISN: ${d.nisn})</p>
+                                <p style="margin:5px 0;">Jalur: ${d.jalur} | Jarak: ${d.jarak} Meter</p>
+                                <h3 style="margin:8px 0;">STATUS: ${d.status}</h3>
+                                ${d.catatan ? `<p style="margin:0; font-size:12px;">Catatan: ${d.catatan}</p>` : ''}
+                            </div>
+                        `;
+                    } else {
+                        hasilDiv.innerHTML = `<div class="status-box status-ditolak">${res.message}</div>`;
+                    }
+                })
+                .doPost({ postData: { contents: JSON.stringify({ action: "cekStatus", nisn: nisn }) } });
+        } else {
+            hasilDiv.innerHTML = `<div class="status-box status-ditolak">Harap jalankan via Apps Script!</div>`;
+        }
     }
 
     // PETUGAS / ADMIN
@@ -534,75 +536,79 @@
         const pin = document.getElementById('pinPetugas').value.trim() || currentPin;
         if(!pin) return alert("Masukkan PIN Petugas!");
 
-        google.script.run
-            .withSuccessHandler(function(res) {
-                if(res.result === "success") {
-                    currentPin = pin;
-                    document.getElementById('loginPetugasView').style.display = "none";
-                    document.getElementById('panelPetugasView').style.display = "block";
-                    
-                    let tbody = document.querySelector('#tabelPetugas tbody');
-                    tbody.innerHTML = "";
-                    
-                    if(res.data.length === 0) {
-                        tbody.innerHTML = "<tr><td colspan='5' style='text-align:center;'>Belum ada pendaftar.</td></tr>";
-                        return;
-                    }
+        if (typeof google !== 'undefined' && google.script && google.script.run) {
+            google.script.run
+                .withSuccessHandler(function(res) {
+                    if(res.result === "success") {
+                        currentPin = pin;
+                        document.getElementById('loginPetugasView').style.display = "none";
+                        document.getElementById('panelPetugasView').style.display = "block";
+                        
+                        let tbody = document.querySelector('#tabelPetugas tbody');
+                        tbody.innerHTML = "";
+                        
+                        if(res.data.length === 0) {
+                            tbody.innerHTML = "<tr><td colspan='5' style='text-align:center;'>Belum ada pendaftar.</td></tr>";
+                            return;
+                        }
 
-                    res.data.forEach(item => {
-                        tbody.innerHTML += `
-                            <tr>
-                                <td>
-                                    <b>${item.nama}</b><br>
-                                    <small>NISN: ${item.nisn}</small><br>
-                                    <small>TTL: ${item.tempat_lahir}, ${item.tanggal_lahir}</small><br>
-                                    <small>JK: ${item.jenis_kelamin}</small>
-                                </td>
-                                <td>
-                                    <small><b>Ayah:</b> ${item.nama_ayah} (${item.tempat_lahir_ayah}, ${item.tanggal_lahir_ayah})<br>Pekerjaan: ${item.pekerjaan_ayah}<br>Gaji: ${item.penghasilan_ayah}</small><br><br>
-                                    <small><b>Ibu:</b> ${item.nama_ibu} (${item.tempat_lahir_ibu}, ${item.tanggal_lahir_ibu})<br>Pekerjaan: ${item.pekerjaan_ibu}<br>Gaji: ${item.penghasilan_ibu}</small><br>
-                                    <small><b>WA Ortu:</b> ${item.wa}</small>
-                                </td>
-                                <td>${item.jalur}<br><small>${item.jarak} Meter</small></td>
-                                <td>
-                                    ${item.formulir ? `<a href="${item.formulir}" target="_blank">Formulir</a>` : '-'}<br>
-                                    ${item.kk ? `<a href="${item.kk}" target="_blank">KK</a>` : '-'}<br>
-                                    ${item.akta ? `<a href="${item.akta}" target="_blank">Akta</a>` : '-'}<br>
-                                    ${item.ijazah ? `<a href="${item.ijazah}" target="_blank">Ijazah/SKHU</a>` : '-'}<br>
-                                    ${item.foto ? `<a href="${item.foto}" target="_blank">Foto</a>` : '-'}
-                                </td>
-                                <td>
-                                    <b>${item.status}</b><br>
-                                    <select id="sel_${item.row}" style="margin-top:4px; font-size:11px; padding:4px;">
-                                        <option value="DITERIMA" ${item.status === 'DITERIMA' ? 'selected':''}>Diterima</option>
-                                        <option value="DITOLAK" ${item.status === 'DITOLAK' ? 'selected':''}>Ditolak</option>
-                                        <option value="Sedang Diproses" ${item.status === 'Sedang Diproses' ? 'selected':''}>Pending</option>
-                                    </select>
-                                    <input type="text" id="cat_${item.row}" value="${item.catatan}" placeholder="Catatan" style="font-size:11px; padding:4px; margin-top:3px;">
-                                    <button class="btn-update" onclick="simpanStatusPetugas(${item.row})">Simpan</button>
-                                </td>
-                            </tr>
-                        `;
-                    });
-                } else {
-                    alert(res.message);
-                }
-            })
-            .doPost({ postData: { contents: JSON.stringify({ action: "getPetugasData", pin: pin }) } });
+                        res.data.forEach(item => {
+                            tbody.innerHTML += `
+                                <tr>
+                                    <td>
+                                        <b>${item.nama}</b><br>
+                                        <small>NISN: ${item.nisn}</small><br>
+                                        <small>TTL: ${item.tempat_lahir}, ${item.tanggal_lahir}</small><br>
+                                        <small>JK: ${item.jenis_kelamin}</small>
+                                    </td>
+                                    <td>
+                                        <small><b>Ayah:</b> ${item.nama_ayah} (${item.tempat_lahir_ayah}, ${item.tanggal_lahir_ayah})<br>Pekerjaan: ${item.pekerjaan_ayah}<br>Gaji: ${item.penghasilan_ayah}</small><br><br>
+                                        <small><b>Ibu:</b> ${item.nama_ibu} (${item.tempat_lahir_ibu}, ${item.tanggal_lahir_ibu})<br>Pekerjaan: ${item.pekerjaan_ibu}<br>Gaji: ${item.penghasilan_ibu}</small><br>
+                                        <small><b>WA Ortu:</b> ${item.wa}</small>
+                                    </td>
+                                    <td>${item.jalur}<br><small>${item.jarak} Meter</small></td>
+                                    <td>
+                                        ${item.formulir ? `<a href="${item.formulir}" target="_blank">Formulir</a>` : '-'}<br>
+                                        ${item.kk ? `<a href="${item.kk}" target="_blank">KK</a>` : '-'}<br>
+                                        ${item.akta ? `<a href="${item.akta}" target="_blank">Akta</a>` : '-'}<br>
+                                        ${item.ijazah ? `<a href="${item.ijazah}" target="_blank">Ijazah/SKHU</a>` : '-'}<br>
+                                        ${item.foto ? `<a href="${item.foto}" target="_blank">Foto</a>` : '-'}
+                                    </td>
+                                    <td>
+                                        <b>${item.status}</b><br>
+                                        <select id="sel_${item.row}" style="margin-top:4px; font-size:11px; padding:4px;">
+                                            <option value="DITERIMA" ${item.status === 'DITERIMA' ? 'selected':''}>Diterima</option>
+                                            <option value="DITOLAK" ${item.status === 'DITOLAK' ? 'selected':''}>Ditolak</option>
+                                            <option value="Sedang Diproses" ${item.status === 'Sedang Diproses' ? 'selected':''}>Pending</option>
+                                        </select>
+                                        <input type="text" id="cat_${item.row}" value="${item.catatan}" placeholder="Catatan" style="font-size:11px; padding:4px; margin-top:3px;">
+                                        <button class="btn-update" onclick="simpanStatusPetugas(${item.row})">Simpan</button>
+                                    </td>
+                                </tr>
+                            `;
+                        });
+                    } else {
+                        alert(res.message);
+                    }
+                })
+                .doPost({ postData: { contents: JSON.stringify({ action: "getPetugasData", pin: pin }) } });
+        }
     }
 
     function simpanStatusPetugas(row) {
         const st = document.getElementById(`sel_${row}`).value;
         const ct = document.getElementById(`cat_${row}`).value;
         
-        google.script.run
-            .withSuccessHandler(function(res) {
-                if(res.result === 'success') {
-                    alert("Status Berhasil Diperbarui!");
-                    loadDataPetugas();
-                }
-            })
-            .doPost({ postData: { contents: JSON.stringify({ action: "updateStatus", pin: currentPin, row: row, status: st, catatan: ct }) } });
+        if (typeof google !== 'undefined' && google.script && google.script.run) {
+            google.script.run
+                .withSuccessHandler(function(res) {
+                    if(res.result === 'success') {
+                        alert("Status Berhasil Diperbarui!");
+                        loadDataPetugas();
+                    }
+                })
+                .doPost({ postData: { contents: JSON.stringify({ action: "updateStatus", pin: currentPin, row: row, status: st, catatan: ct }) } });
+        }
     }
 </script>
 
