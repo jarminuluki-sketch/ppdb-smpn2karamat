@@ -7,9 +7,29 @@
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f6f9; padding: 20px; margin: 0; }
         .container { max-width: 700px; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin: auto; }
-        h2 { text-align: center; color: #1e3a8a; margin-bottom: 5px; }
-        p.subtitle { text-align: center; color: #4b5563; font-size: 14px; margin-top: 0; margin-bottom: 20px; }
         
+        /* HEADER LOGO & JUDUL */
+        .header-container { text-align: center; margin-bottom: 15px; }
+        .logo-sekolah { width: 90px; height: auto; margin-bottom: 10px; }
+        h2 { color: #1e3a8a; margin: 0 0 5px 0; }
+        p.subtitle { color: #4b5563; font-size: 14px; margin: 0 0 15px 0; }
+
+        /* RUNNING TEXT (TEKS BERJALAN) */
+        .running-text-container {
+            background-color: #1e3a8a;
+            color: #ffffff;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .running-text-container marquee {
+            display: block;
+        }
+
         .tab-menu { display: flex; gap: 5px; margin-bottom: 25px; border-bottom: 2px solid #e5e7eb; }
         .tab-btn { flex: 1; padding: 12px; background: #f3f4f6; border: none; font-weight: bold; color: #4b5563; cursor: pointer; border-radius: 6px 6px 0 0; transition: 0.2s; }
         .tab-btn.active { background: #2563eb; color: white; }
@@ -43,8 +63,20 @@
 <body>
 
 <div class="container">
-    <h2>PPDB Online</h2>
-    <p class="subtitle">SMP Negeri 2 Karamat</p>
+    <!-- HEADER DENGAN LOGO & JUDUL -->
+    <div class="header-container">
+        <!-- Ganti atribut 'src' di bawah ini dengan URL Gambar Logo Sekolah Anda -->
+        <img src="https://via.placeholder.com/100?text=LOGO" alt="Logo SMP Negeri 2 Karamat" class="logo-sekolah">
+        <h2>PPDB Online</h2>
+        <p class="subtitle">SMP Negeri 2 Karamat</p>
+    </div>
+
+    <!-- RUNNING TEXT (TEKS BERJALAN) -->
+    <div class="running-text-container">
+        <marquee behavior="scroll" direction="left" scrollamount="5">
+            📢 Selamat Datang di Portal Penerimaan Peserta Didik Baru (PPDB) SMP Negeri 2 Karamat | Harap pastikan semua data dan berkas yang diunggah sudah benar dan lengkap!
+        </marquee>
+    </div>
 
     <!-- Navigasi Tab Menu -->
     <div class="tab-menu">
@@ -278,7 +310,7 @@
 
 <script>
     // MASUKKAN URL WEB APP GOOGLE APPS SCRIPT ANDA DI SINI
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzj3I7K3MIdJ6EsaIPx2llM9zQ7IT0NiGZUVaaVmdlm5WTpHw7q9zJZOHltrCuMN1_f/exec";
+    const SCRIPT_URL = "URL_WEB_APP_BARU_ANDA_DI_SINI";
 
     function openTab(tabId, btn) {
         document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
