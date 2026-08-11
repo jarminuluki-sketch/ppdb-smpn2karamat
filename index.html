@@ -8,21 +8,24 @@
   <style>
     body { background-color: #f4f6f9; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
     .card { border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); border: none; }
-    .header-logo { max-height: 100px; width: auto; object-fit: contain; }
+    .header-logo { max-height: 90px; width: auto; object-fit: contain; }
     .btn-primary { background-color: #2563eb; border: none; padding: 12px; font-weight: 600; border-radius: 8px; }
     .btn-primary:hover { background-color: #1d4ed8; }
     .status-text { font-weight: bold; color: #2563eb; margin-top: 12px; }
     .section-title { border-bottom: 2px solid #e5e7eb; padding-bottom: 8px; margin-top: 25px; margin-bottom: 18px; color: #374151; font-weight: 600; }
+    .nav-pills .nav-link { border-radius: 8px; font-weight: 600; color: #4b5563; }
+    .nav-pills .nav-link.active { background-color: #2563eb; }
+    .badge-status { font-size: 1rem; padding: 10px 18px; border-radius: 20px; }
   </style>
 </head>
 <body>
 
 <div class="container py-4">
   <div class="row justify-content-center">
-    <div class="col-md-9 col-lg-8">
+    <div class="col-md-10 col-lg-9">
       <div class="card p-4 p-md-5">
         
-        <!-- LOGO KOSTUM DARI GOOGLE DRIVE -->
+        <!-- HEADER -->
         <div class="text-center mb-4">
           <img src="https://lh3.googleusercontent.com/d/1eoGamxmD0zINXITkYiDxcmQJVeSkltOa" alt="Logo Sekolah" class="header-logo mb-3">
           <h3 class="fw-bold text-primary mb-1">PPDB ONLINE</h3>
@@ -30,187 +33,283 @@
           <p class="text-muted small mb-0">Tahun Ajaran 2026/2027</p>
         </div>
 
-        <hr class="mb-4">
+        <!-- MENU NAVIGASI TAB -->
+        <ul class="nav nav-pills nav-justified mb-4" id="ppdbTab" role="tablist">
+          <li class="nav-item">
+            <button class="nav-link active" id="tab-daftar" data-bs-toggle="pill" data-bs-target="#content-daftar" type="button">Form Pendaftaran</button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" id="tab-status" data-bs-toggle="pill" data-bs-target="#content-status" type="button">Cek Status / Kelulusan</button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" id="tab-petugas" data-bs-toggle="pill" data-bs-target="#content-petugas" type="button">Area Petugas</button>
+          </li>
+        </ul>
 
-        <form id="formPPDB">
-          <!-- DATA SISWA -->
-          <h6 class="section-title">A. Data Calon Siswa</h6>
-          <div class="row g-3">
-            <div class="col-md-6">
-              <label class="form-label">NISN (10 Digit) *</label>
-              <input type="text" id="nisn" class="form-control" placeholder="10 digit NISN" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '');" required>
-            </div>
-            <div class="col-md-6">
-              <label class="form-label">NIK (16 Digit) *</label>
-              <input type="text" id="nik" class="form-control" placeholder="16 digit NIK" maxlength="16" oninput="this.value = this.value.replace(/[^0-9]/g, '');" required>
-            </div>
-            <div class="col-md-6">
-              <label class="form-label">No. Kartu Keluarga (16 Digit) *</label>
-              <input type="text" id="no_kk" class="form-control" placeholder="16 digit No. KK" maxlength="16" oninput="this.value = this.value.replace(/[^0-9]/g, '');" required>
-            </div>
-            <div class="col-md-6">
-              <label class="form-label">Nama Lengkap *</label>
-              <input type="text" id="nama" class="form-control" placeholder="Sesuai Ijazah/Akta" required>
-            </div>
-            <div class="col-md-6">
-              <label class="form-label">Tempat Lahir *</label>
-              <input type="text" id="tempat_lahir" class="form-control" required>
-            </div>
-            <div class="col-md-6">
-              <label class="form-label">Tanggal Lahir *</label>
-              <input type="date" id="tanggal_lahir" class="form-control" required>
-            </div>
-            <div class="col-md-6">
-              <label class="form-label">Jenis Kelamin *</label>
-              <select id="jenis_kelamin" class="form-select" required>
-                <option value="">-- Pilih --</option>
-                <option value="Laki-laki">Laki-laki</option>
-                <option value="Perempuan">Perempuan</option>
-              </select>
-            </div>
-            <div class="col-md-6">
-              <label class="form-label">Jalur Pendaftaran *</label>
-              <select id="jalur" class="form-select" required>
-                <option value="">-- Pilih Jalur --</option>
-                <option value="Zonasi">Zonasi</option>
-                <option value="Afirmasi">Afirmasi</option>
-                <option value="Prestasi">Prestasi</option>
-                <option value="Pindah Tugas Orang Tua">Pindah Tugas Orang Tua</option>
-              </select>
-            </div>
-            <div class="col-md-4">
-              <label class="form-label">Hobi</label>
-              <input type="text" id="hobi" class="form-control">
-            </div>
-            <div class="col-md-4">
-              <label class="form-label">Cita-cita</label>
-              <input type="text" id="cita_cita" class="form-control">
-            </div>
-            <div class="col-md-4">
-              <label class="form-label">No. WhatsApp Active *</label>
-              <input type="text" id="wa" class="form-control" placeholder="08xxx" oninput="this.value = this.value.replace(/[^0-9]/g, '');" required>
-            </div>
-            <div class="col-md-4">
-              <label class="form-label">Tinggi Badan (cm)</label>
-              <input type="number" id="tinggi_badan" class="form-control">
-            </div>
-            <div class="col-md-4">
-              <label class="form-label">Berat Badan (kg)</label>
-              <input type="number" id="berat_badan" class="form-control">
-            </div>
-            <div class="col-md-4">
-              <label class="form-label">Lingkar Kepala (cm)</label>
-              <input type="number" id="lingkar_kepala" class="form-control">
-            </div>
-          </div>
-
-          <!-- DATA ORANG TUA -->
-          <h6 class="section-title">B. Data Orang Tua / Wali</h6>
-          <div class="row g-3">
-            <div class="col-md-6">
-              <label class="form-label">Nama Ayah *</label>
-              <input type="text" id="nama_ayah" class="form-control" required>
-            </div>
-            <div class="col-md-3">
-              <label class="form-label">Tempat Lahir Ayah</label>
-              <input type="text" id="tempat_lahir_ayah" class="form-control">
-            </div>
-            <div class="col-md-3">
-              <label class="form-label">Tgl Lahir Ayah</label>
-              <input type="date" id="tanggal_lahir_ayah" class="form-control">
-            </div>
-            <div class="col-md-6">
-              <label class="form-label">Pekerjaan Ayah</label>
-              <input type="text" id="pekerjaan_ayah" class="form-control">
-            </div>
-            <div class="col-md-6">
-              <label class="form-label">Penghasilan Ayah *</label>
-              <select id="penghasilan_ayah" class="form-select" required>
-                <option value="">-- Pilih Penghasilan --</option>
-                <option value="Tidak Berpenghasilan">Tidak Berpenghasilan</option>
-                <option value="Kurang dari Rp 1.000.000">Kurang dari Rp 1.000.000</option>
-                <option value="Rp 1.000.000 - Rp 2.000.000">Rp 1.000.000 - Rp 2.000.000</option>
-                <option value="Rp 2.000.000 - Rp 3.000.000">Rp 2.000.000 - Rp 3.000.000</option>
-                <option value="Rp 3.000.000 - Rp 5.000.000">Rp 3.000.000 - Rp 5.000.000</option>
-                <option value="Lebih dari Rp 5.000.000">Lebih dari Rp 5.000.000</option>
-              </select>
-            </div>
-
-            <div class="col-md-6">
-              <label class="form-label">Nama Ibu *</label>
-              <input type="text" id="nama_ibu" class="form-control" required>
-            </div>
-            <div class="col-md-3">
-              <label class="form-label">Tempat Lahir Ibu</label>
-              <input type="text" id="tempat_lahir_ibu" class="form-control">
-            </div>
-            <div class="col-md-3">
-              <label class="form-label">Tgl Lahir Ibu</label>
-              <input type="date" id="tanggal_lahir_ibu" class="form-control">
-            </div>
-            <div class="col-md-6">
-              <label class="form-label">Pekerjaan Ibu</label>
-              <input type="text" id="pekerjaan_ibu" class="form-control">
-            </div>
-            <div class="col-md-6">
-              <label class="form-label">Penghasilan Ibu *</label>
-              <select id="penghasilan_ibu" class="form-select" required>
-                <option value="">-- Pilih Penghasilan --</option>
-                <option value="Tidak Berpenghasilan">Tidak Berpenghasilan</option>
-                <option value="Kurang dari Rp 1.000.000">Kurang dari Rp 1.000.000</option>
-                <option value="Rp 1.000.000 - Rp 2.000.000">Rp 1.000.000 - Rp 2.000.000</option>
-                <option value="Rp 2.000.000 - Rp 3.000.000">Rp 2.000.000 - Rp 3.000.000</option>
-                <option value="Rp 3.000.000 - Rp 5.000.000">Rp 3.000.000 - Rp 5.000.000</option>
-                <option value="Lebih dari Rp 5.000.000">Lebih dari Rp 5.000.000</option>
-              </select>
-            </div>
-          </div>
-
-          <!-- UNGGAH BERKAS -->
-          <h6 class="section-title">C. Unggah Berkas Persyaratan</h6>
-          <small class="text-muted d-block mb-3">* Gambar dikompres otomatis agar waktu upload berlangsung cepat (< 10 detik).</small>
+        <div class="tab-content" id="ppdbTabContent">
           
-          <div class="row g-3">
-            <div class="col-12">
-              <label class="form-label">Unggah Formulir Pendaftaran (PDF/Gambar)</label>
-              <input type="file" id="file_formulir" class="form-control" accept=".pdf,image/*">
-            </div>
-            <div class="col-12">
-              <label class="form-label">Unggah Kartu Keluarga (PDF/Gambar)</label>
-              <input type="file" id="file_kk" class="form-control" accept=".pdf,image/*">
-            </div>
-            <div class="col-12">
-              <label class="form-label">Unggah Akta Kelahiran (PDF/Gambar)</label>
-              <input type="file" id="file_akta" class="form-control" accept=".pdf,image/*">
-            </div>
-            <div class="col-12">
-              <label class="form-label">Unggah Ijazah / SKHU (PDF/Gambar)</label>
-              <input type="file" id="file_ijazah" class="form-control" accept=".pdf,image/*">
-            </div>
-            <div class="col-12">
-              <label class="form-label">Unggah Swafoto Siswa (Gambar)</label>
-              <input type="file" id="file_foto" class="form-control" accept="image/*">
-            </div>
-          </div>
+          <!-- TAB 1: FORM PENDAFTARAN -->
+          <div class="tab-pane fade show active" id="content-daftar" role="tabpanel">
+            <form id="formPPDB">
+              <h6 class="section-title">A. Data Calon Siswa</h6>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label">NISN (10 Digit) *</label>
+                  <input type="text" id="nisn" class="form-control" placeholder="10 digit NISN" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '');" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">NIK (16 Digit) *</label>
+                  <input type="text" id="nik" class="form-control" placeholder="16 digit NIK" maxlength="16" oninput="this.value = this.value.replace(/[^0-9]/g, '');" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">No. Kartu Keluarga (16 Digit) *</label>
+                  <input type="text" id="no_kk" class="form-control" placeholder="16 digit No. KK" maxlength="16" oninput="this.value = this.value.replace(/[^0-9]/g, '');" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Nama Lengkap *</label>
+                  <input type="text" id="nama" class="form-control" placeholder="Sesuai Ijazah/Akta" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Tempat Lahir *</label>
+                  <input type="text" id="tempat_lahir" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Tanggal Lahir *</label>
+                  <input type="date" id="tanggal_lahir" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Jenis Kelamin *</label>
+                  <select id="jenis_kelamin" class="form-select" required>
+                    <option value="">-- Pilih --</option>
+                    <option value="Laki-laki">Laki-laki</option>
+                    <option value="Perempuan">Perempuan</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Jalur Pendaftaran *</label>
+                  <select id="jalur" class="form-select" required>
+                    <option value="">-- Pilih Jalur --</option>
+                    <option value="Zonasi">Zonasi</option>
+                    <option value="Afirmasi">Afirmasi</option>
+                    <option value="Prestasi">Prestasi</option>
+                    <option value="Pindah Tugas Orang Tua">Pindah Tugas Orang Tua</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Hobi</label>
+                  <input type="text" id="hobi" class="form-control">
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Cita-cita</label>
+                  <input type="text" id="cita_cita" class="form-control">
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">No. WhatsApp Active *</label>
+                  <input type="text" id="wa" class="form-control" placeholder="08xxx" oninput="this.value = this.value.replace(/[^0-9]/g, '');" required>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Tinggi Badan (cm)</label>
+                  <input type="number" id="tinggi_badan" class="form-control">
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Berat Badan (kg)</label>
+                  <input type="number" id="berat_badan" class="form-control">
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Lingkar Kepala (cm)</label>
+                  <input type="number" id="lingkar_kepala" class="form-control">
+                </div>
+              </div>
 
-          <!-- TOMBOL AKSI -->
-          <div class="row g-3 mt-4">
-            <div class="col-12">
-              <button type="button" class="btn btn-outline-primary w-100 fw-bold" id="btnLokasi" onclick="ambilLokasi()">
-                1. Ambil Lokasi Rumah Saya
-              </button>
-              <small id="textLokasi" class="text-muted d-block text-center mt-2"></small>
-            </div>
+              <!-- DATA ORANG TUA -->
+              <h6 class="section-title">B. Data Orang Tua / Wali</h6>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label">Nama Ayah *</label>
+                  <input type="text" id="nama_ayah" class="form-control" required>
+                </div>
+                <div class="col-md-3">
+                  <label class="form-label">Tempat Lahir Ayah</label>
+                  <input type="text" id="tempat_lahir_ayah" class="form-control">
+                </div>
+                <div class="col-md-3">
+                  <label class="form-label">Tgl Lahir Ayah</label>
+                  <input type="date" id="tanggal_lahir_ayah" class="form-control">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Pekerjaan Ayah</label>
+                  <input type="text" id="pekerjaan_ayah" class="form-control">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Penghasilan Ayah *</label>
+                  <select id="penghasilan_ayah" class="form-select" required>
+                    <option value="">-- Pilih Penghasilan --</option>
+                    <option value="Tidak Berpenghasilan">Tidak Berpenghasilan</option>
+                    <option value="Kurang dari Rp 1.000.000">Kurang dari Rp 1.000.000</option>
+                    <option value="Rp 1.000.000 - Rp 2.000.000">Rp 1.000.000 - Rp 2.000.000</option>
+                    <option value="Rp 2.000.000 - Rp 3.000.000">Rp 2.000.000 - Rp 3.000.000</option>
+                    <option value="Rp 3.000.000 - Rp 5.000.000">Rp 3.000.000 - Rp 5.000.000</option>
+                    <option value="Lebih dari Rp 5.000.000">Lebih dari Rp 5.000.000</option>
+                  </select>
+                </div>
 
-            <div class="col-12 text-center mt-3">
-              <button type="submit" class="btn btn-primary w-100 fw-bold fs-6" id="btnKirim">
-                2. Kirim Pendaftaran
-              </button>
+                <div class="col-md-6">
+                  <label class="form-label">Nama Ibu *</label>
+                  <input type="text" id="nama_ibu" class="form-control" required>
+                </div>
+                <div class="col-md-3">
+                  <label class="form-label">Tempat Lahir Ibu</label>
+                  <input type="text" id="tempat_lahir_ibu" class="form-control">
+                </div>
+                <div class="col-md-3">
+                  <label class="form-label">Tgl Lahir Ibu</label>
+                  <input type="date" id="tanggal_lahir_ibu" class="form-control">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Pekerjaan Ibu</label>
+                  <input type="text" id="pekerjaan_ibu" class="form-control">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Penghasilan Ibu *</label>
+                  <select id="penghasilan_ibu" class="form-select" required>
+                    <option value="">-- Pilih Penghasilan --</option>
+                    <option value="Tidak Berpenghasilan">Tidak Berpenghasilan</option>
+                    <option value="Kurang dari Rp 1.000.000">Kurang dari Rp 1.000.000</option>
+                    <option value="Rp 1.000.000 - Rp 2.000.000">Rp 1.000.000 - Rp 2.000.000</option>
+                    <option value="Rp 2.000.000 - Rp 3.000.000">Rp 2.000.000 - Rp 3.000.000</option>
+                    <option value="Rp 3.000.000 - Rp 5.000.000">Rp 3.000.000 - Rp 5.000.000</option>
+                    <option value="Lebih dari Rp 5.000.000">Lebih dari Rp 5.000.000</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- UNGGAH BERKAS -->
+              <h6 class="section-title">C. Unggah Berkas Persyaratan</h6>
+              <small class="text-muted d-block mb-3">* Gambar dikompres otomatis agar waktu upload cepat.</small>
               
-              <div id="statusProses" class="status-text mt-3"></div>
+              <div class="row g-3">
+                <div class="col-12">
+                  <label class="form-label">Unggah Formulir Pendaftaran (PDF/Gambar)</label>
+                  <input type="file" id="file_formulir" class="form-control" accept=".pdf,image/*">
+                </div>
+                <div class="col-12">
+                  <label class="form-label">Unggah Kartu Keluarga (PDF/Gambar)</label>
+                  <input type="file" id="file_kk" class="form-control" accept=".pdf,image/*">
+                </div>
+                <div class="col-12">
+                  <label class="form-label">Unggah Akta Kelahiran (PDF/Gambar)</label>
+                  <input type="file" id="file_akta" class="form-control" accept=".pdf,image/*">
+                </div>
+                <div class="col-12">
+                  <label class="form-label">Unggah Ijazah / SKHU (PDF/Gambar)</label>
+                  <input type="file" id="file_ijazah" class="form-control" accept=".pdf,image/*">
+                </div>
+                <div class="col-12">
+                  <label class="form-label">Unggah Swafoto Siswa (Gambar)</label>
+                  <input type="file" id="file_foto" class="form-control" accept="image/*">
+                </div>
+              </div>
+
+              <!-- TOMBOL AKSI -->
+              <div class="row g-3 mt-4">
+                <div class="col-12">
+                  <button type="button" class="btn btn-outline-primary w-100 fw-bold" id="btnLokasi" onclick="ambilLokasi()">
+                    1. Ambil Lokasi Rumah Saya
+                  </button>
+                  <small id="textLokasi" class="text-muted d-block text-center mt-2"></small>
+                </div>
+
+                <div class="col-12 text-center mt-3">
+                  <button type="submit" class="btn btn-primary w-100 fw-bold fs-6" id="btnKirim">
+                    2. Kirim Pendaftaran
+                  </button>
+                  <div id="statusProses" class="status-text mt-3"></div>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <!-- TAB 2: CEK STATUS / KELULUSAN -->
+          <div class="tab-pane fade" id="content-status" role="tabpanel">
+            <div class="row justify-content-center py-3">
+              <div class="col-md-8 text-center">
+                <h5 class="fw-bold mb-3">Cek Hasil Verifikasi & Kelulusan Administrasi</h5>
+                <p class="text-muted small">Masukkan 10 digit NISN yang terdaftar saat mengajukan pendaftaran.</p>
+                <div class="input-group mb-3">
+                  <input type="text" id="cek_nisn" class="form-control form-control-lg" placeholder="Masukkan NISN..." maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
+                  <button class="btn btn-primary px-4 fw-bold" type="button" onclick="cariStatus()">Cari Data</button>
+                </div>
+
+                <div id="loadingCek" class="spinner-border text-primary d-none my-3" role="status"></div>
+
+                <!-- HASIL PENCARIAN -->
+                <div id="hasilCek" class="card p-4 mt-4 text-start border d-none">
+                  <h6 class="fw-bold border-bottom pb-2">Informasi Calon Siswa:</h6>
+                  <div class="row mb-2">
+                    <div class="col-5 text-muted">Nama Lengkap</div>
+                    <div class="col-7 fw-bold" id="res_nama">-</div>
+                  </div>
+                  <div class="row mb-2">
+                    <div class="col-5 text-muted">NISN</div>
+                    <div class="col-7 fw-bold" id="res_nisn">-</div>
+                  </div>
+                  <div class="row mb-2">
+                    <div class="col-5 text-muted">Jalur Pendaftaran</div>
+                    <div class="col-7 fw-bold" id="res_jalur">-</div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col-5 text-muted">Jarak Domisili</div>
+                    <div class="col-7 fw-bold" id="res_jarak">-</div>
+                  </div>
+
+                  <h6 class="fw-bold border-bottom pb-2 mt-2">Status Verifikasi Administrasi:</h6>
+                  <div class="text-center py-3">
+                    <span id="res_status" class="badge badge-status bg-secondary">Sedang Diproses</span>
+                  </div>
+                  <div id="boxCatatan" class="alert alert-warning mt-2 d-none">
+                    <strong>Catatan Panitia:</strong> <span id="res_catatan">-</span>
+                  </div>
+                </div>
+
+              </div>
             </div>
           </div>
-        </form>
+
+          <!-- TAB 3: AREA PETUGAS PANITIA -->
+          <div class="tab-pane fade" id="content-petugas" role="tabpanel">
+            <div id="loginPetugas" class="row justify-content-center py-4">
+              <div class="col-md-6 text-center">
+                <h5 class="fw-bold mb-3">Verifikasi Panitia PPDB</h5>
+                <input type="password" id="pin_petugas" class="form-control text-center form-control-lg mb-3" placeholder="Masukkan PIN Petugas">
+                <button class="btn btn-primary w-100 fw-bold" onclick="loginPetugas()">Masuk Panel Petugas</button>
+              </div>
+            </div>
+
+            <div id="panelPetugas" class="d-none">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="fw-bold m-0">Daftar Verifikasi Berkas Calon Siswa</h5>
+                <button class="btn btn-sm btn-outline-secondary" onclick="loginPetugas()">Refresh Data</button>
+              </div>
+              <div class="table-responsive">
+                <table class="table table-bordered table-hover align-middle small">
+                  <thead class="table-light">
+                    <tr>
+                      <th>Nama / NISN</th>
+                      <th>Jalur / Jarak</th>
+                      <th>Berkas Drive</th>
+                      <th>Status Saat Ini</th>
+                      <th>Aksi Verifikasi</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tabelPetugas">
+                    <!-- Data diisi secara dinamis oleh JavaScript -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
 
         <hr class="mt-5">
         <div class="text-center text-muted small">
@@ -223,6 +322,7 @@
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
   let userLat = 0;
   let userLng = 0;
@@ -230,7 +330,6 @@
   function ambilLokasi() {
     const btn = document.getElementById('btnLokasi');
     const txt = document.getElementById('textLokasi');
-    
     if (navigator.geolocation) {
       btn.innerText = "Mendapatkan Lokasi...";
       navigator.geolocation.getCurrentPosition(
@@ -241,17 +340,16 @@
           txt.className = "text-success fw-bold d-block text-center mt-2";
           txt.innerText = "Lokasi Berhasil Dikunci! (" + userLat.toFixed(5) + ", " + userLng.toFixed(5) + ")";
         },
-        (err) => {
+        () => {
           btn.innerText = "1. Ambil Lokasi Rumah Saya";
           alert("Gagal mengambil lokasi! Mohon aktifkan GPS di perangkat Anda.");
         }
       );
     } else {
-      alert("Browser Anda tidak mendukung fitur Geolocation.");
+      alert("Browser Anda tidak mendukung Geolocation.");
     }
   }
 
-  // Fungsi Kompresi Berkas Gambar Otomatis
   function processFile(fileInputId) {
     return new Promise((resolve) => {
       const fileInput = document.getElementById(fileInputId);
@@ -259,7 +357,6 @@
         resolve({ base64: "", ext: "" });
         return;
       }
-
       const file = fileInput.files[0];
       const ext = file.name.split('.').pop().toLowerCase();
 
@@ -281,19 +378,15 @@
           let width = img.width;
           let height = img.height;
           const maxWidth = 1000;
-
           if (width > maxWidth) {
             height = Math.round((height * maxWidth) / width);
             width = maxWidth;
           }
-
           canvas.width = width;
           canvas.height = height;
           const ctx = canvas.getContext('2d');
           ctx.drawImage(img, 0, 0, width, height);
-
-          const compressedBase64 = canvas.toDataURL('image/jpeg', 0.7);
-          resolve({ base64: compressedBase64, ext: 'jpg' });
+          resolve({ base64: canvas.toDataURL('image/jpeg', 0.7), ext: 'jpg' });
         };
         img.onerror = () => resolve({ base64: "", ext: "" });
       };
@@ -302,52 +395,28 @@
 
   document.getElementById('formPPDB').addEventListener('submit', async function(e) {
     e.preventDefault();
-
     const nisn = document.getElementById('nisn').value;
     const nik = document.getElementById('nik').value;
     const no_kk = document.getElementById('no_kk').value;
 
-    // VALIDASI DIGIT
-    if (nisn.length !== 10) {
-      alert("NISN wajib diisi persis 10 digit angka!");
-      return;
-    }
-
-    if (nik.length !== 16) {
-      alert("NIK wajib diisi persis 16 digit angka!");
-      return;
-    }
-
-    if (no_kk.length !== 16) {
-      alert("No. Kartu Keluarga wajib diisi persis 16 digit angka!");
-      return;
-    }
-
-    if (userLat === 0 && userLng === 0) {
-      alert("Silakan klik tombol '1. Ambil Lokasi Rumah Saya' terlebih dahulu!");
-      return;
-    }
+    if (nisn.length !== 10) return alert("NISN wajib 10 digit!");
+    if (nik.length !== 16) return alert("NIK wajib 16 digit!");
+    if (no_kk.length !== 16) return alert("No. KK wajib 16 digit!");
+    if (userLat === 0 && userLng === 0) return alert("Silakan ambil lokasi terlebih dahulu!");
 
     const btnKirim = document.getElementById('btnKirim');
     const statusProses = document.getElementById('statusProses');
-
     btnKirim.disabled = true;
-    statusProses.innerText = "Menyimpan data dan berkas ke Google Drive...";
+    statusProses.innerText = "Menyimpan data dan berkas...";
 
     try {
       const [fFormulir, fKK, fAkta, fIjazah, fFoto] = await Promise.all([
-        processFile('file_formulir'),
-        processFile('file_kk'),
-        processFile('file_akta'),
-        processFile('file_ijazah'),
-        processFile('file_foto')
+        processFile('file_formulir'), processFile('file_kk'), processFile('file_akta'), processFile('file_ijazah'), processFile('file_foto')
       ]);
 
       const payload = {
         action: "daftarBaru",
-        nisn: nisn,
-        nik: nik,
-        no_kk: no_kk,
+        nisn: nisn, nik: nik, no_kk: no_kk,
         nama: document.getElementById('nama').value,
         tempat_lahir: document.getElementById('tempat_lahir').value,
         tanggal_lahir: document.getElementById('tanggal_lahir').value,
@@ -369,16 +438,11 @@
         tanggal_lahir_ibu: document.getElementById('tanggal_lahir_ibu').value,
         pekerjaan_ibu: document.getElementById('pekerjaan_ibu').value,
         penghasilan_ibu: document.getElementById('penghasilan_ibu').value,
-        latitude: userLat,
-        longitude: userLng,
-        formulirBase64: fFormulir.base64,
-        formulirExt: fFormulir.ext,
-        kkBase64: fKK.base64,
-        kkExt: fKK.ext,
-        aktaBase64: fAkta.base64,
-        aktaExt: fAkta.ext,
-        ijazahBase64: fIjazah.base64,
-        ijazahExt: fIjazah.ext,
+        latitude: userLat, longitude: userLng,
+        formulirBase64: fFormulir.base64, formulirExt: fFormulir.ext,
+        kkBase64: fKK.base64, kkExt: fKK.ext,
+        aktaBase64: fAkta.base64, aktaExt: fAkta.ext,
+        ijazahBase64: fIjazah.base64, ijazahExt: fIjazah.ext,
         fotoBase64: fFoto.base64
       };
 
@@ -396,11 +460,6 @@
             alert("Gagal: " + res.message);
           }
         })
-        .withFailureHandler(function(err) {
-          btnKirim.disabled = false;
-          statusProses.innerText = "Gagal Mengirim!";
-          alert("Terjadi kesalahan koneksi/server: " + err);
-        })
         .prosesPendaftaran(payload);
 
     } catch (err) {
@@ -409,6 +468,110 @@
       alert("Error: " + err);
     }
   });
+
+  // LOGIKA CEK STATUS PENDAPATAN
+  function cariStatus() {
+    const nisn = document.getElementById('cek_nisn').value;
+    if (nisn.length !== 10) return alert("Masukkan 10 digit NISN!");
+
+    document.getElementById('loadingCek').classList.remove('d-none');
+    document.getElementById('hasilCek').classList.add('d-none');
+
+    google.script.run
+      .withSuccessHandler(function(res) {
+        document.getElementById('loadingCek').classList.add('d-none');
+        if (res.result === "success") {
+          const d = res.data;
+          document.getElementById('res_nama').innerText = d.nama;
+          document.getElementById('res_nisn').innerText = d.nisn;
+          document.getElementById('res_jalur').innerText = d.jalur;
+          document.getElementById('res_jarak').innerText = d.jarak + " Meter";
+
+          const badge = document.getElementById('res_status');
+          badge.innerText = d.status;
+          badge.className = "badge badge-status ";
+
+          if (d.status === "Lulus Administrasi") badge.classList.add("bg-success");
+          else if (d.status === "Tidak Lulus Administrasi") badge.classList.add("bg-danger");
+          else if (d.status === "Berkas Tidak Lengkap") badge.classList.add("bg-warning", "text-dark");
+          else badge.classList.add("bg-secondary");
+
+          if (d.catatan && d.catatan.trim() !== "") {
+            document.getElementById('boxCatatan').classList.remove('d-none');
+            document.getElementById('res_catatan').innerText = d.catatan;
+          } else {
+            document.getElementById('boxCatatan').classList.add('d-none');
+          }
+
+          document.getElementById('hasilCek').classList.remove('d-none');
+        } else {
+          alert(res.message);
+        }
+      })
+      .prosesCekStatus(nisn);
+  }
+
+  // LOGIKA PETUGAS PANITIA
+  function loginPetugas() {
+    const pin = document.getElementById('pin_petugas').value;
+    if (!pin) return alert("Masukkan PIN!");
+
+    google.script.run
+      .withSuccessHandler(function(res) {
+        if (res.result === "success") {
+          document.getElementById('loginPetugas').classList.add('d-none');
+          document.getElementById('panelPetugas').classList.remove('d-none');
+          
+          let html = "";
+          res.data.forEach(item => {
+            html += `
+              <tr>
+                <td><strong>${item.nama}</strong><br><small class="text-muted">NISN: ${item.nisn}</small></td>
+                <td>${item.jalur}<br><small class="text-muted">${item.jarak} M</small></td>
+                <td>
+                  ${item.formulir ? `<a href="${item.formulir}" target="_blank" class="badge bg-info text-decoration-none mb-1">Formulir</a><br>` : ''}
+                  ${item.kk ? `<a href="${item.kk}" target="_blank" class="badge bg-info text-decoration-none mb-1">KK</a><br>` : ''}
+                  ${item.akta ? `<a href="${item.akta}" target="_blank" class="badge bg-info text-decoration-none mb-1">Akta</a><br>` : ''}
+                  ${item.ijazah ? `<a href="${item.ijazah}" target="_blank" class="badge bg-info text-decoration-none mb-1">Ijazah</a><br>` : ''}
+                  ${item.foto ? `<a href="${item.foto}" target="_blank" class="badge bg-info text-decoration-none">Foto</a>` : ''}
+                </td>
+                <td><span class="badge bg-secondary">${item.status}</span></td>
+                <td>
+                  <select id="sel_${item.row}" class="form-select form-select-sm mb-1">
+                    <option value="Sedang Diproses" ${item.status === 'Sedang Diproses' ? 'selected' : ''}>Sedang Diproses</option>
+                    <option value="Berkas Tidak Lengkap" ${item.status === 'Berkas Tidak Lengkap' ? 'selected' : ''}>Berkas Tidak Lengkap</option>
+                    <option value="Lulus Administrasi" ${item.status === 'Lulus Administrasi' ? 'selected' : ''}>Lulus Administrasi</option>
+                    <option value="Tidak Lulus Administrasi" ${item.status === 'Tidak Lulus Administrasi' ? 'selected' : ''}>Tidak Lulus Administrasi</option>
+                  </select>
+                  <input type="text" id="cat_${item.row}" class="form-control form-control-sm mb-1" placeholder="Catatan" value="${item.catatan}">
+                  <button class="btn btn-sm btn-success w-100 fw-bold" onclick="simpanStatus(${item.row})">Simpan</button>
+                </td>
+              </tr>
+            `;
+          });
+          document.getElementById('tabelPetugas').innerHTML = html;
+        } else {
+          alert(res.message);
+        }
+      })
+      .prosesGetPetugasData(pin);
+  }
+
+  function simpanStatus(row) {
+    const pin = document.getElementById('pin_petugas').value;
+    const status = document.getElementById('sel_' + row).value;
+    const catatan = document.getElementById('cat_' + row).value;
+
+    google.script.run
+      .withSuccessHandler(function(res) {
+        if (res.result === "success") {
+          alert("Status Berhasil Diperbarui!");
+        } else {
+          alert("Gagal: " + res.message);
+        }
+      })
+      .prosesUpdateStatus({ pin: pin, row: row, status: status, catatan: catatan });
+  }
 </script>
 
 </body>
