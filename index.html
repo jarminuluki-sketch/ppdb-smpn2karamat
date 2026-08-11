@@ -208,7 +208,7 @@
                   <input type="text" id="nisn" class="form-control" placeholder="Contoh: 0081234567" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '');" required>
                 </div>
                 <div class="col-md-4">
-                  <label class="form-label">NIK (16 Digit) *</label>
+                  <label class="form-label">NIK Siswa (16 Digit) *</label>
                   <input type="text" id="nik" class="form-control" placeholder="16 Digit NIK" maxlength="16" oninput="this.value = this.value.replace(/[^0-9]/g, '');" required>
                 </div>
                 <div class="col-md-4">
@@ -284,16 +284,20 @@
 
               <div class="row g-3">
                 <!-- AYAH -->
-                <div class="col-md-6">
+                <div class="col-md-4">
+                  <label class="form-label">NIK Ayah (16 Digit) *</label>
+                  <input type="text" id="nik_ayah" class="form-control" placeholder="16 Digit NIK Ayah" maxlength="16" oninput="this.value = this.value.replace(/[^0-9]/g, '');" required>
+                </div>
+                <div class="col-md-4">
                   <label class="form-label">Nama Ayah Kandung *</label>
                   <input type="text" id="nama_ayah" class="form-control" required>
                 </div>
-                <div class="col-md-3">
-                  <label class="form-label">Tempat Lahir Ayah</label>
+                <div class="col-md-2">
+                  <label class="form-label">Tempat Lahir</label>
                   <input type="text" id="tempat_lahir_ayah" class="form-control">
                 </div>
-                <div class="col-md-3">
-                  <label class="form-label">Tgl Lahir Ayah</label>
+                <div class="col-md-2">
+                  <label class="form-label">Tgl Lahir</label>
                   <input type="date" id="tanggal_lahir_ayah" class="form-control">
                 </div>
                 <div class="col-md-6">
@@ -314,16 +318,20 @@
                 </div>
 
                 <!-- IBU -->
-                <div class="col-md-6">
+                <div class="col-md-4">
+                  <label class="form-label">NIK Ibu (16 Digit) *</label>
+                  <input type="text" id="nik_ibu" class="form-control" placeholder="16 Digit NIK Ibu" maxlength="16" oninput="this.value = this.value.replace(/[^0-9]/g, '');" required>
+                </div>
+                <div class="col-md-4">
                   <label class="form-label">Nama Ibu Kandung *</label>
                   <input type="text" id="nama_ibu" class="form-control" required>
                 </div>
-                <div class="col-md-3">
-                  <label class="form-label">Tempat Lahir Ibu</label>
+                <div class="col-md-2">
+                  <label class="form-label">Tempat Lahir</label>
                   <input type="text" id="tempat_lahir_ibu" class="form-control">
                 </div>
-                <div class="col-md-3">
-                  <label class="form-label">Tgl Lahir Ibu</label>
+                <div class="col-md-2">
+                  <label class="form-label">Tgl Lahir</label>
                   <input type="date" id="tanggal_lahir_ibu" class="form-control">
                 </div>
                 <div class="col-md-6">
@@ -567,10 +575,14 @@
     const nisn = document.getElementById('nisn').value;
     const nik = document.getElementById('nik').value;
     const no_kk = document.getElementById('no_kk').value;
+    const nik_ayah = document.getElementById('nik_ayah').value;
+    const nik_ibu = document.getElementById('nik_ibu').value;
 
-    if (nisn.length !== 10) return alert("NISN wajib 10 digit!");
-    if (nik.length !== 16) return alert("NIK wajib 16 digit!");
+    if (nisn.length !== 10) return alert("NISN Siswa wajib 10 digit!");
+    if (nik.length !== 16) return alert("NIK Siswa wajib 16 digit!");
     if (no_kk.length !== 16) return alert("No. KK wajib 16 digit!");
+    if (nik_ayah.length !== 16) return alert("NIK Ayah wajib 16 digit!");
+    if (nik_ibu.length !== 16) return alert("NIK Ibu wajib 16 digit!");
     if (userLat === 0 && userLng === 0) return alert("Silakan ambil titik lokasi rumah terlebih dahulu!");
 
     const btnKirim = document.getElementById('btnKirim');
@@ -596,11 +608,13 @@
         tinggi_badan: document.getElementById('tinggi_badan').value,
         berat_badan: document.getElementById('berat_badan').value,
         lingkar_kepala: document.getElementById('lingkar_kepala').value,
+        nik_ayah: nik_ayah,
         nama_ayah: document.getElementById('nama_ayah').value,
         tempat_lahir_ayah: document.getElementById('tempat_lahir_ayah').value,
         tanggal_lahir_ayah: document.getElementById('tanggal_lahir_ayah').value,
         pekerjaan_ayah: document.getElementById('pekerjaan_ayah').value,
         penghasilan_ayah: document.getElementById('penghasilan_ayah').value,
+        nik_ibu: nik_ibu,
         nama_ibu: document.getElementById('nama_ibu').value,
         tempat_lahir_ibu: document.getElementById('tempat_lahir_ibu').value,
         tanggal_lahir_ibu: document.getElementById('tanggal_lahir_ibu').value,
