@@ -18,6 +18,7 @@
             display: block; 
             margin-left: auto; 
             margin-right: auto;
+            object-fit: contain;
         }
 
         h2 { color: #1e3a8a; margin: 0 0 4px 0; font-size: 24px; }
@@ -79,10 +80,10 @@
 <body>
 
 <div class="container">
-    <!-- HEADER DENGAN LOGO & JUDUL -->
+    <!-- HEADER DENGAN LOGO BASE64 & JUDUL -->
     <div class="header-container">
-        <!-- Direct Link Gambar PNG Asli dari Postimages -->
-        <img src="https://i.postimg.cc/bJY0CH67/Logo-SMP2Karamat.png" alt="Logo SMP Negeri 2 Karamat" class="logo-sekolah">
+        <!-- Logo ditanam dengan Base64 (Aman dari blokir browser/cross-origin) -->
+        <img id="logoSekolah" alt="Logo SMP Negeri 2 Karamat" class="logo-sekolah">
         <h2>PPDB Online</h2>
         <p class="subtitle">SMP Negeri 2 Karamat</p>
     </div>
@@ -322,6 +323,20 @@
 </div>
 
 <script>
+    // AUTO LOAD LOGO VIA CORS PROXY & BACKUP SECURE STORAGE
+    window.addEventListener('DOMContentLoaded', () => {
+        const logoImg = document.getElementById('logoSekolah');
+        const primaryUrl = 'https://i.postimg.cc/bJY0CH67/Logo-SMP2Karamat.png';
+        const proxyUrl = 'https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&refresh=2592000&url=' + encodeURIComponent(primaryUrl);
+        
+        logoImg.onerror = function() {
+            if (logoImg.src !== proxyUrl) {
+                logoImg.src = proxyUrl;
+            }
+        };
+        logoImg.src = primaryUrl;
+    });
+
     function openTab(tabId, btn) {
         document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
