@@ -101,10 +101,10 @@
                 <small class="file-hint">* Format: PDF, JPG, PNG. <strong>Maksimal ukuran file: 2 MB</strong></small>
             </div>
 
-            <!-- UNGGAH BERKAS PENDUKUNG -->
+            <!-- UNGGAH IJAZAH DAN TRANSKRIP NILAI / SKHU -->
             <div class="form-group">
-                <label>Unggah Berkas Pendukung (PDF/Gambar)</label>
-                <input type="file" id="berkas" accept=".pdf,.jpg,.jpeg,.png" required onchange="validasiUkuranFile(this, 2)">
+                <label>Unggah Ijazah dan Transkrip Nilai / SKHU (PDF/Gambar)</label>
+                <input type="file" id="ijazah" accept=".pdf,.jpg,.jpeg,.png" required onchange="validasiUkuranFile(this, 2)">
                 <small class="file-hint">* Format: PDF, JPG, PNG. <strong>Maksimal ukuran file: 2 MB</strong></small>
             </div>
             
@@ -254,7 +254,7 @@
 
         const formulirFile = document.getElementById('formulir_file').files[0];
         const aktaFile = document.getElementById('akta').files[0];
-        const berkasFile = document.getElementById('berkas').files[0];
+        const ijazahFile = document.getElementById('ijazah').files[0];
         const fotoFile = document.getElementById('foto').files[0];
 
         btnSubmit.disabled = true;
@@ -265,7 +265,7 @@
         try {
             const formulirBase64 = await kompresGambar(formulirFile);
             const aktaBase64 = await kompresGambar(aktaFile);
-            const berkasBase64 = await kompresGambar(berkasFile);
+            const ijazahBase64 = await kompresGambar(ijazahFile);
             const fotoBase64 = await kompresGambar(fotoFile);
 
             const payload = {
@@ -285,9 +285,9 @@
                 aktaBase64: aktaBase64,
                 aktaExt: aktaFile.name.split('.').pop(),
                 aktaMime: aktaFile.type,
-                berkasBase64: berkasBase64,
-                berkasExt: berkasFile.name.split('.').pop(),
-                berkasMime: berkasFile.type,
+                ijazahBase64: ijazahBase64,
+                ijazahExt: ijazahFile.name.split('.').pop(),
+                ijazahMime: ijazahFile.type,
                 fotoBase64: fotoBase64,
                 latitude: parseFloat(document.getElementById('latitude').value),
                 longitude: parseFloat(document.getElementById('longitude').value)
@@ -388,7 +388,7 @@
                             <td>
                                 ${item.formulir ? `<a href="${item.formulir}" target="_blank">Formulir</a>` : '-'}<br>
                                 ${item.akta ? `<a href="${item.akta}" target="_blank">Akta</a>` : '-'}<br>
-                                ${item.berkas ? `<a href="${item.berkas}" target="_blank">Berkas</a>` : '-'}<br>
+                                ${item.ijazah ? `<a href="${item.ijazah}" target="_blank">Ijazah/SKHU</a>` : '-'}<br>
                                 ${item.foto ? `<a href="${item.foto}" target="_blank">Foto</a>` : '-'}
                             </td>
                             <td>
