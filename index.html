@@ -6,7 +6,7 @@
     <title>PPDB Online SMP Negeri 2 Karamat</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f6f9; padding: 20px; margin: 0; }
-        .container { max-width: 650px; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin: auto; }
+        .container { max-width: 700px; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin: auto; }
         h2 { text-align: center; color: #1e3a8a; margin-bottom: 5px; }
         p.subtitle { text-align: center; color: #4b5563; font-size: 14px; margin-top: 0; margin-bottom: 20px; }
         
@@ -15,6 +15,8 @@
         .tab-btn.active { background: #2563eb; color: white; }
         .tab-content { display: none; }
         .tab-content.active { display: block; }
+
+        .section-title { font-size: 15px; font-weight: bold; color: #1e3a8a; border-bottom: 2px solid #e5e7eb; padding-bottom: 5px; margin-top: 25px; margin-bottom: 15px; }
 
         .form-group { margin-bottom: 16px; }
         .form-row { display: flex; gap: 10px; }
@@ -54,24 +56,25 @@
     <!-- TAB 1: FORMULIR -->
     <div id="formTab" class="tab-content active">
         <form id="formPendaftaran">
+            <!-- DATA SISWA -->
+            <div class="section-title">📌 DATA CALON SISWA</div>
+            
             <div class="form-group"><label>NISN</label><input type="number" id="nisn" required placeholder="10 digit NISN"></div>
             <div class="form-group"><label>NIK Siswa</label><input type="number" id="nik" required placeholder="16 digit NIK"></div>
             <div class="form-group"><label>No. KK</label><input type="number" id="no_kk" required placeholder="16 digit No. KK"></div>
-            <div class="form-group"><label>Nama Lengkap</label><input type="text" id="nama" required placeholder="Sesuai ijazah SD"></div>
+            <div class="form-group"><label>Nama Lengkap Siswa</label><input type="text" id="nama" required placeholder="Sesuai ijazah SD"></div>
             
-            <!-- TEMPAT & TANGGAL LAHIR -->
             <div class="form-row">
                 <div class="form-group">
-                    <label>Tempat Lahir</label>
+                    <label>Tempat Lahir Siswa</label>
                     <input type="text" id="tempat_lahir" required placeholder="Kota/Kabupaten lahir">
                 </div>
                 <div class="form-group">
-                    <label>Tanggal Lahir</label>
+                    <label>Tanggal Lahir Siswa</label>
                     <input type="date" id="tanggal_lahir" required>
                 </div>
             </div>
 
-            <!-- JENIS KELAMIN -->
             <div class="form-group">
                 <label>Jenis Kelamin</label>
                 <select id="jenis_kelamin" required>
@@ -81,7 +84,6 @@
                 </select>
             </div>
 
-            <!-- HOBI & CITA-CITA -->
             <div class="form-row">
                 <div class="form-group">
                     <label>Hobi</label>
@@ -93,7 +95,6 @@
                 </div>
             </div>
 
-            <!-- ISIAN DATA FISIK SISWA -->
             <div class="form-row">
                 <div class="form-group">
                     <label>Tinggi Badan (cm)</label>
@@ -119,44 +120,106 @@
                     <option value="Perpindahan Ortu">Perpindahan Tugas Orang Tua</option>
                 </select>
             </div>
-            <div class="form-group"><label>No WhatsApp Ortu</label><input type="tel" id="wa" required placeholder="08xxxxxxxxxx"></div>
-            
-            <!-- UNGGAH FORMULIR FISIK / CETAK -->
+
+            <!-- DATA ORANG TUA -->
+            <div class="section-title">👨‍👩‍👧 DATA ORANG TUA</div>
+
+            <!-- DATA AYAH -->
+            <div class="form-group"><label>Nama Ayah Kandung</label><input type="text" id="nama_ayah" required placeholder="Nama lengkap Ayah"></div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Tempat Lahir Ayah</label>
+                    <input type="text" id="tempat_lahir_ayah" required placeholder="Kota/Kabupaten">
+                </div>
+                <div class="form-group">
+                    <label>Tanggal Lahir Ayah</label>
+                    <input type="date" id="tanggal_lahir_ayah" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Pekerjaan Ayah</label>
+                    <input type="text" id="pekerjaan_ayah" required placeholder="Contoh: PNS, Petani, Wiraswasta">
+                </div>
+                <div class="form-group">
+                    <label>Penghasilan Ayah / Bulan</label>
+                    <select id="penghasilan_ayah" required>
+                        <option value="">-- Pilih Penghasilan --</option>
+                        <option value="Tidak Berpenghasilan">Tidak Berpenghasilan</option>
+                        <option value="< Rp 1.000.000">&lt; Rp 1.000.000</option>
+                        <option value="Rp 1.000.000 - Rp 2.000.000">Rp 1.000.000 - Rp 2.000.000</option>
+                        <option value="Rp 2.000.000 - Rp 5.000.000">Rp 2.000.000 - Rp 5.000.000</option>
+                        <option value="> Rp 5.000.000">&gt; Rp 5.000.000</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- DATA IBU -->
+            <div class="form-group" style="margin-top: 15px;"><label>Nama Ibu Kandung</label><input type="text" id="nama_ibu" required placeholder="Nama lengkap Ibu"></div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Tempat Lahir Ibu</label>
+                    <input type="text" id="tempat_lahir_ibu" required placeholder="Kota/Kabupaten">
+                </div>
+                <div class="form-group">
+                    <label>Tanggal Lahir Ibu</label>
+                    <input type="date" id="tanggal_lahir_ibu" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Pekerjaan Ibu</label>
+                    <input type="text" id="pekerjaan_ibu" required placeholder="Contoh: Ibu Rumah Tangga, PNS, Pedagang">
+                </div>
+                <div class="form-group">
+                    <label>Penghasilan Ibu / Bulan</label>
+                    <select id="penghasilan_ibu" required>
+                        <option value="">-- Pilih Penghasilan --</option>
+                        <option value="Tidak Berpenghasilan">Tidak Berpenghasilan</option>
+                        <option value="< Rp 1.000.000">&lt; Rp 1.000.000</option>
+                        <option value="Rp 1.000.000 - Rp 2.000.000">Rp 1.000.000 - Rp 2.000.000</option>
+                        <option value="Rp 2.000.000 - Rp 5.000.000">Rp 2.000.000 - Rp 5.000.000</option>
+                        <option value="> Rp 5.000.000">&gt; Rp 5.000.000</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-top: 15px;"><label>No WhatsApp Ortu</label><input type="tel" id="wa" required placeholder="08xxxxxxxxxx"></div>
+
+            <!-- UNGGAH BERKAS -->
+            <div class="section-title">📁 UNGGAH BERKAS PERSYARATAN</div>
+
             <div class="form-group">
                 <label>Unggah Formulir Pendaftaran (PDF/Gambar)</label>
                 <input type="file" id="formulir_file" accept=".pdf,.jpg,.jpeg,.png" required onchange="validasiUkuranFile(this, 2)">
                 <small class="file-hint">* Format: PDF, JPG, PNG. <strong>Maksimal ukuran file: 2 MB</strong></small>
             </div>
 
-            <!-- UNGGAH KARTU KELUARGA (BARU) -->
             <div class="form-group">
                 <label>Unggah Kartu Keluarga (PDF/Gambar)</label>
                 <input type="file" id="kk_file" accept=".pdf,.jpg,.jpeg,.png" required onchange="validasiUkuranFile(this, 2)">
                 <small class="file-hint">* Format: PDF, JPG, PNG. <strong>Maksimal ukuran file: 2 MB</strong></small>
             </div>
 
-            <!-- UNGGAH AKTA KELAHIRAN -->
             <div class="form-group">
                 <label>Unggah Akta Kelahiran (PDF/Gambar)</label>
                 <input type="file" id="akta" accept=".pdf,.jpg,.jpeg,.png" required onchange="validasiUkuranFile(this, 2)">
                 <small class="file-hint">* Format: PDF, JPG, PNG. <strong>Maksimal ukuran file: 2 MB</strong></small>
             </div>
 
-            <!-- UNGGAH IJAZAH DAN TRANSKRIP NILAI / SKHU -->
             <div class="form-group">
                 <label>Unggah Ijazah dan Transkrip Nilai / SKHU (PDF/Gambar)</label>
                 <input type="file" id="ijazah" accept=".pdf,.jpg,.jpeg,.png" required onchange="validasiUkuranFile(this, 2)">
                 <small class="file-hint">* Format: PDF, JPG, PNG. <strong>Maksimal ukuran file: 2 MB</strong></small>
             </div>
             
-            <!-- UNGGAH SWAFOTO -->
             <div class="form-group">
                 <label>Unggah Swafoto Siswa</label>
                 <input type="file" id="foto" accept="image/*" required onchange="validasiUkuranFile(this, 2)">
-                <small class="file-hint">* Format: Gambar (JPG/PNG). <strong>Maksimal ukuran file: 2 MB</strong> (Dikompres otomatis)</small>
+                <small class="file-hint">* Format: Gambar (JPG/PNG). <strong>Maksimal ukuran file: 2 MB</strong></small>
             </div>
             
-            <div class="form-group">
+            <div class="form-group" style="margin-top:20px;">
                 <button type="button" onclick="dapatkanLokasi()">1. Ambil Lokasi Rumah Saya</button>
                 <p id="lokasiText" style="font-size: 12px; color: #4b5563; text-align: center; margin-top: 5px;"></p>
             </div>
@@ -200,7 +263,7 @@
                     <thead>
                         <tr>
                             <th>Siswa & Bio</th>
-                            <th>Fisik</th>
+                            <th>Data Orang Tua</th>
                             <th>Jalur/Jarak</th>
                             <th>Berkas</th>
                             <th>Status & Aksi</th>
@@ -215,7 +278,7 @@
 
 <script>
     // MASUKKAN URL WEB APP GOOGLE APPS SCRIPT ANDA DI SINI
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw6K320El1pEhSfsvX0JTeM3B28WEH5LW8JPkOePY_D6DLrADnNifPZxtP3ecp1zlQ/exec";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzj3I7K3MIdJ6EsaIPx2llM9zQ7IT0NiGZUVaaVmdlm5WTpHw7q9zJZOHltrCuMN1_f/exec";
 
     function openTab(tabId, btn) {
         document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
@@ -324,7 +387,22 @@
                 berat_badan: document.getElementById('berat_badan').value,
                 lingkar_kepala: document.getElementById('lingkar_kepala').value,
                 jalur: document.getElementById('jalur').value,
+                
+                // DATA ORTU
+                nama_ayah: document.getElementById('nama_ayah').value,
+                tempat_lahir_ayah: document.getElementById('tempat_lahir_ayah').value,
+                tanggal_lahir_ayah: document.getElementById('tanggal_lahir_ayah').value,
+                pekerjaan_ayah: document.getElementById('pekerjaan_ayah').value,
+                penghasilan_ayah: document.getElementById('penghasilan_ayah').value,
+                
+                nama_ibu: document.getElementById('nama_ibu').value,
+                tempat_lahir_ibu: document.getElementById('tempat_lahir_ibu').value,
+                tanggal_lahir_ibu: document.getElementById('tanggal_lahir_ibu').value,
+                pekerjaan_ibu: document.getElementById('pekerjaan_ibu').value,
+                penghasilan_ibu: document.getElementById('penghasilan_ibu').value,
+
                 wa: document.getElementById('wa').value,
+                
                 formulirBase64: formulirBase64,
                 formulirExt: formulirFile.name.split('.').pop(),
                 formulirMime: formulirFile.type,
@@ -435,10 +513,13 @@
                                 <b>${item.nama}</b><br>
                                 <small>NISN: ${item.nisn}</small><br>
                                 <small>TTL: ${item.tempat_lahir}, ${item.tanggal_lahir}</small><br>
-                                <small>JK: ${item.jenis_kelamin}</small><br>
-                                <small>Hobi/Cita: ${item.hobi} / ${item.cita_cita}</small>
+                                <small>JK: ${item.jenis_kelamin}</small>
                             </td>
-                            <td><small>TB: ${item.tinggi_badan} cm<br>BB: ${item.berat_badan} kg<br>LK: ${item.lingkar_kepala} cm</small></td>
+                            <td>
+                                <small><b>Ayah:</b> ${item.nama_ayah} (${item.tempat_lahir_ayah}, ${item.tanggal_lahir_ayah})<br>Pekerjaan: ${item.pekerjaan_ayah}<br>Gaji: ${item.penghasilan_ayah}</small><br><br>
+                                <small><b>Ibu:</b> ${item.nama_ibu} (${item.tempat_lahir_ibu}, ${item.tanggal_lahir_ibu})<br>Pekerjaan: ${item.pekerjaan_ibu}<br>Gaji: ${item.penghasilan_ibu}</small><br>
+                                <small><b>WA Ortu:</b> ${item.wa}</small>
+                            </td>
                             <td>${item.jalur}<br><small>${item.jarak} M</small></td>
                             <td>
                                 ${item.formulir ? `<a href="${item.formulir}" target="_blank">Formulir</a>` : '-'}<br>
