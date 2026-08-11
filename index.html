@@ -19,11 +19,11 @@
             margin-left: auto; 
             margin-right: auto;
             object-fit: contain;
+            min-height: 100px;
         }
 
         h2 { color: #1e3a8a; margin: 0 0 4px 0; font-size: 24px; }
         
-        /* Teks nama sekolah tepat di bawah logo dengan ukuran font 16px */
         p.subtitle { 
             color: #1e3a8a; 
             font-size: 16px; 
@@ -31,7 +31,7 @@
             margin: 0 0 15px 0; 
         }
 
-        /* RUNNING TEXT (TEKS BERJALAN) */
+        /* RUNNING TEXT */
         .running-text-container {
             background-color: #1e3a8a;
             color: #ffffff;
@@ -80,9 +80,9 @@
 <body>
 
 <div class="container">
-    <!-- HEADER DENGAN LOGO BASE64 & JUDUL -->
+    <!-- HEADER DENGAN LOGO & JUDUL -->
     <div class="header-container">
-        <!-- Logo ditanam dengan Base64 (Aman dari blokir browser/cross-origin) -->
+        <!-- Element Gambar Logo -->
         <img id="logoSekolah" alt="Logo SMP Negeri 2 Karamat" class="logo-sekolah">
         <h2>PPDB Online</h2>
         <p class="subtitle">SMP Negeri 2 Karamat</p>
@@ -105,7 +105,6 @@
     <!-- TAB 1: FORMULIR -->
     <div id="formTab" class="tab-content active">
         <form id="formPendaftaran">
-            <!-- DATA SISWA -->
             <div class="section-title">📌 DATA CALON SISWA</div>
             
             <div class="form-group"><label>NISN</label><input type="number" id="nisn" required placeholder="10 digit NISN"></div>
@@ -170,10 +169,8 @@
                 </select>
             </div>
 
-            <!-- DATA ORANG TUA -->
             <div class="section-title">👨‍👩‍👧 DATA ORANG TUA</div>
 
-            <!-- DATA AYAH -->
             <div class="form-group"><label>Nama Ayah Kandung</label><input type="text" id="nama_ayah" required placeholder="Nama lengkap Ayah"></div>
             <div class="form-row">
                 <div class="form-group">
@@ -203,7 +200,6 @@
                 </div>
             </div>
 
-            <!-- DATA IBU -->
             <div class="form-group" style="margin-top: 15px;"><label>Nama Ibu Kandung</label><input type="text" id="nama_ibu" required placeholder="Nama lengkap Ibu"></div>
             <div class="form-row">
                 <div class="form-group">
@@ -218,7 +214,7 @@
             <div class="form-row">
                 <div class="form-group">
                     <label>Pekerjaan Ibu</label>
-                    <input type="text" id="pekerjaan_ibu" required placeholder="Contoh: Ibu Rumah Tangga, PNS, Pedagang">
+                    <input type="text" id="pekerjaan_ibu" required placeholder="Contoh: Ibu Rumah Tangga, PNS">
                 </div>
                 <div class="form-group">
                     <label>Penghasilan Ibu / Bulan</label>
@@ -235,7 +231,6 @@
 
             <div class="form-group" style="margin-top: 15px;"><label>No WhatsApp Ortu</label><input type="tel" id="wa" required placeholder="08xxxxxxxxxx"></div>
 
-            <!-- UNGGAH BERKAS -->
             <div class="section-title">📁 UNGGAH BERKAS PERSYARATAN</div>
 
             <div class="form-group">
@@ -323,18 +318,20 @@
 </div>
 
 <script>
-    // AUTO LOAD LOGO VIA CORS PROXY & BACKUP SECURE STORAGE
+    // FUNGSI UTAMA UNTUK MENGAMBIL LOGO OTOMATIS DARI GOOGLE DRIVE
     window.addEventListener('DOMContentLoaded', () => {
-        const logoImg = document.getElementById('logoSekolah');
-        const primaryUrl = 'https://i.postimg.cc/bJY0CH67/Logo-SMP2Karamat.png';
-        const proxyUrl = 'https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&refresh=2592000&url=' + encodeURIComponent(primaryUrl);
-        
-        logoImg.onerror = function() {
-            if (logoImg.src !== proxyUrl) {
-                logoImg.src = proxyUrl;
-            }
-        };
-        logoImg.src = primaryUrl;
+        google.script.run
+            .withSuccessHandler(function(base64Image) {
+                if (base64Image) {
+                    document.getElementById('logoSekolah').src = base64Image;
+                } else {
+                    console.error("Gagal memuat logo dari Google Drive. Pastikan akses file di Drive diset 'Siapa saja yang memiliki link'");
+                }
+            })
+            .withFailureHandler(function(err) {
+                console.error("Error panggil getLogoBase64:", err);
+            })
+            .getLogoBase64();
     });
 
     function openTab(tabId, btn) {
