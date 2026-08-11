@@ -8,9 +8,7 @@
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f6f9; padding: 20px; margin: 0; }
         .container { max-width: 750px; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin: auto; }
         
-        /* HEADER LOGO & JUDUL */
         .header-container { text-align: center; margin-bottom: 20px; }
-        
         .logo-sekolah { 
             width: 120px; 
             height: auto; 
@@ -23,15 +21,8 @@
         }
 
         h2 { color: #1e3a8a; margin: 0 0 4px 0; font-size: 24px; }
-        
-        p.subtitle { 
-            color: #1e3a8a; 
-            font-size: 16px; 
-            font-weight: bold; 
-            margin: 0 0 15px 0; 
-        }
+        p.subtitle { color: #1e3a8a; font-size: 16px; font-weight: bold; margin: 0 0 15px 0; }
 
-        /* RUNNING TEXT (TEKS BERJALAN) */
         .running-text-container {
             background-color: #1e3a8a;
             color: #ffffff;
@@ -42,9 +33,6 @@
             margin-bottom: 20px;
             overflow: hidden;
             white-space: nowrap;
-        }
-        .running-text-container marquee {
-            display: block;
         }
 
         .tab-menu { display: flex; gap: 5px; margin-bottom: 25px; border-bottom: 2px solid #e5e7eb; }
@@ -80,7 +68,6 @@
 <body>
 
 <div class="container">
-    <!-- HEADER DENGAN LOGO GOOGLE DRIVE DIRECT LINK -->
     <div class="header-container">
         <img id="logoSekolah" 
              src="https://lh3.googleusercontent.com/d/1eoGamxmD0zINXITkYiDxcmQJVeSkltOa" 
@@ -90,21 +77,18 @@
         <p class="subtitle">SMP Negeri 2 Karamat</p>
     </div>
 
-    <!-- RUNNING TEXT (TEKS BERJALAN) -->
     <div class="running-text-container">
         <marquee behavior="scroll" direction="left" scrollamount="5">
             📢 Selamat Datang di Portal Penerimaan Peserta Didik Baru (PPDB) SMP Negeri 2 Karamat | Harap pastikan semua data dan berkas yang diunggah sudah benar dan lengkap!
         </marquee>
     </div>
 
-    <!-- Navigasi Tab Menu -->
     <div class="tab-menu">
         <button class="tab-btn active" onclick="openTab('formTab', this)">Formulir</button>
         <button class="tab-btn" onclick="openTab('statusTab', this)">Cek Status</button>
         <button class="tab-btn" onclick="openTab('petugasTab', this)">Menu Petugas</button>
     </div>
 
-    <!-- TAB 1: FORMULIR -->
     <div id="formTab" class="tab-content active">
         <form id="formPendaftaran">
             <div class="section-title">📌 DATA CALON SISWA</div>
@@ -115,14 +99,8 @@
             <div class="form-group"><label>Nama Lengkap Siswa</label><input type="text" id="nama" required placeholder="Sesuai ijazah SD"></div>
             
             <div class="form-row">
-                <div class="form-group">
-                    <label>Tempat Lahir Siswa</label>
-                    <input type="text" id="tempat_lahir" required placeholder="Kota/Kabupaten lahir">
-                </div>
-                <div class="form-group">
-                    <label>Tanggal Lahir Siswa</label>
-                    <input type="date" id="tanggal_lahir" required>
-                </div>
+                <div class="form-group"><label>Tempat Lahir Siswa</label><input type="text" id="tempat_lahir" required placeholder="Kota/Kabupaten"></div>
+                <div class="form-group"><label>Tanggal Lahir Siswa</label><input type="date" id="tanggal_lahir" required></div>
             </div>
 
             <div class="form-group">
@@ -135,29 +113,14 @@
             </div>
 
             <div class="form-row">
-                <div class="form-group">
-                    <label>Hobi</label>
-                    <input type="text" id="hobi" required placeholder="Contoh: Olahraga, Membaca">
-                </div>
-                <div class="form-group">
-                    <label>Cita-Cita</label>
-                    <input type="text" id="cita_cita" required placeholder="Contoh: Guru, Dokter, TNI">
-                </div>
+                <div class="form-group"><label>Hobi</label><input type="text" id="hobi" required placeholder="Olahraga, Membaca, dll"></div>
+                <div class="form-group"><label>Cita-Cita</label><input type="text" id="cita_cita" required placeholder="Guru, Dokter, TNI, dll"></div>
             </div>
 
             <div class="form-row">
-                <div class="form-group">
-                    <label>Tinggi Badan (cm)</label>
-                    <input type="number" id="tinggi_badan" required placeholder="Contoh: 150">
-                </div>
-                <div class="form-group">
-                    <label>Berat Badan (kg)</label>
-                    <input type="number" id="berat_badan" required placeholder="Contoh: 45">
-                </div>
-                <div class="form-group">
-                    <label>Lingkar Kepala (cm)</label>
-                    <input type="number" id="lingkar_kepala" required placeholder="Contoh: 52">
-                </div>
+                <div class="form-group"><label>Tinggi Badan (cm)</label><input type="number" id="tinggi_badan" required placeholder="150"></div>
+                <div class="form-group"><label>Berat Badan (kg)</label><input type="number" id="berat_badan" required placeholder="45"></div>
+                <div class="form-group"><label>Lingkar Kepala (cm)</label><input type="number" id="lingkar_kepala" required placeholder="52"></div>
             </div>
 
             <div class="form-group">
@@ -173,22 +136,13 @@
 
             <div class="section-title">👨‍👩‍👧 DATA ORANG TUA</div>
 
-            <div class="form-group"><label>Nama Ayah Kandung</label><input type="text" id="nama_ayah" required placeholder="Nama lengkap Ayah"></div>
+            <div class="form-group"><label>Nama Ayah Kandung</label><input type="text" id="nama_ayah" required placeholder="Nama Ayah"></div>
             <div class="form-row">
-                <div class="form-group">
-                    <label>Tempat Lahir Ayah</label>
-                    <input type="text" id="tempat_lahir_ayah" required placeholder="Kota/Kabupaten">
-                </div>
-                <div class="form-group">
-                    <label>Tanggal Lahir Ayah</label>
-                    <input type="date" id="tanggal_lahir_ayah" required>
-                </div>
+                <div class="form-group"><label>Tempat Lahir Ayah</label><input type="text" id="tempat_lahir_ayah" required placeholder="Kota/Kabupaten"></div>
+                <div class="form-group"><label>Tanggal Lahir Ayah</label><input type="date" id="tanggal_lahir_ayah" required></div>
             </div>
             <div class="form-row">
-                <div class="form-group">
-                    <label>Pekerjaan Ayah</label>
-                    <input type="text" id="pekerjaan_ayah" required placeholder="Contoh: PNS, Petani, Wiraswasta">
-                </div>
+                <div class="form-group"><label>Pekerjaan Ayah</label><input type="text" id="pekerjaan_ayah" required placeholder="PNS, Petani, Wiraswasta, dll"></div>
                 <div class="form-group">
                     <label>Penghasilan Ayah / Bulan</label>
                     <select id="penghasilan_ayah" required>
@@ -202,22 +156,13 @@
                 </div>
             </div>
 
-            <div class="form-group" style="margin-top: 15px;"><label>Nama Ibu Kandung</label><input type="text" id="nama_ibu" required placeholder="Nama lengkap Ibu"></div>
+            <div class="form-group" style="margin-top: 15px;"><label>Nama Ibu Kandung</label><input type="text" id="nama_ibu" required placeholder="Nama Ibu"></div>
             <div class="form-row">
-                <div class="form-group">
-                    <label>Tempat Lahir Ibu</label>
-                    <input type="text" id="tempat_lahir_ibu" required placeholder="Kota/Kabupaten">
-                </div>
-                <div class="form-group">
-                    <label>Tanggal Lahir Ibu</label>
-                    <input type="date" id="tanggal_lahir_ibu" required>
-                </div>
+                <div class="form-group"><label>Tempat Lahir Ibu</label><input type="text" id="tempat_lahir_ibu" required placeholder="Kota/Kabupaten"></div>
+                <div class="form-group"><label>Tanggal Lahir Ibu</label><input type="date" id="tanggal_lahir_ibu" required></div>
             </div>
             <div class="form-row">
-                <div class="form-group">
-                    <label>Pekerjaan Ibu</label>
-                    <input type="text" id="pekerjaan_ibu" required placeholder="Contoh: Ibu Rumah Tangga, PNS">
-                </div>
+                <div class="form-group"><label>Pekerjaan Ibu</label><input type="text" id="pekerjaan_ibu" required placeholder="Ibu Rumah Tangga, PNS, dll"></div>
                 <div class="form-group">
                     <label>Penghasilan Ibu / Bulan</label>
                     <select id="penghasilan_ibu" required>
@@ -238,31 +183,31 @@
             <div class="form-group">
                 <label>Unggah Formulir Pendaftaran (PDF/Gambar)</label>
                 <input type="file" id="formulir_file" accept=".pdf,.jpg,.jpeg,.png" required onchange="validasiUkuranFile(this, 2)">
-                <small class="file-hint">* Format: PDF, JPG, PNG. Maksimal 2 MB</small>
+                <small class="file-hint">* Maksimal 2 MB</small>
             </div>
 
             <div class="form-group">
                 <label>Unggah Kartu Keluarga (PDF/Gambar)</label>
                 <input type="file" id="kk_file" accept=".pdf,.jpg,.jpeg,.png" required onchange="validasiUkuranFile(this, 2)">
-                <small class="file-hint">* Format: PDF, JPG, PNG. Maksimal 2 MB</small>
+                <small class="file-hint">* Maksimal 2 MB</small>
             </div>
 
             <div class="form-group">
                 <label>Unggah Akta Kelahiran (PDF/Gambar)</label>
                 <input type="file" id="akta" accept=".pdf,.jpg,.jpeg,.png" required onchange="validasiUkuranFile(this, 2)">
-                <small class="file-hint">* Format: PDF, JPG, PNG. Maksimal 2 MB</small>
+                <small class="file-hint">* Maksimal 2 MB</small>
             </div>
 
             <div class="form-group">
                 <label>Unggah Ijazah / SKHU (PDF/Gambar)</label>
                 <input type="file" id="ijazah" accept=".pdf,.jpg,.jpeg,.png" required onchange="validasiUkuranFile(this, 2)">
-                <small class="file-hint">* Format: PDF, JPG, PNG. Maksimal 2 MB</small>
+                <small class="file-hint">* Maksimal 2 MB</small>
             </div>
             
             <div class="form-group">
                 <label>Unggah Swafoto Siswa</label>
                 <input type="file" id="foto" accept="image/*" required onchange="validasiUkuranFile(this, 2)">
-                <small class="file-hint">* Format: Gambar (JPG/PNG). Maksimal 2 MB</small>
+                <small class="file-hint">* Maksimal 2 MB</small>
             </div>
             
             <div class="form-group" style="margin-top:20px;">
@@ -276,7 +221,6 @@
         <div id="statusForm" style="margin-top:15px; text-align:center; font-weight:bold;"></div>
     </div>
 
-    <!-- TAB 2: CEK STATUS -->
     <div id="statusTab" class="tab-content">
         <div class="form-group">
             <label>Masukkan NISN Calon Siswa</label>
@@ -286,12 +230,11 @@
         <div id="hasilCekStatus"></div>
     </div>
 
-    <!-- TAB 3: MENU PETUGAS -->
     <div id="petugasTab" class="tab-content">
         <div id="loginPetugasView">
             <div class="form-group">
                 <label>Masukkan PIN Petugas</label>
-                <input type="password" id="pinPetugas" placeholder="PIN Rahasia (Bawaan: 123456)">
+                <input type="password" id="pinPetugas" placeholder="PIN Rahasia (Default: 123456)">
             </div>
             <button onclick="loadDataPetugas()">Masuk Panel Petugas</button>
         </div>
@@ -336,7 +279,7 @@
                 const btn = document.getElementById('btnSubmit');
                 btn.disabled = false;
                 btn.style.background = "#2563eb";
-            }, () => alert("Gagal mengambil lokasi. Pastikan izin lokasi/GPS aktif!"));
+            }, () => alert("Gagal mengambil lokasi. Pastikan GPS/Izin Lokasi aktif!"));
         } else {
             alert("Browser tidak mendukung geolokasi.");
         }
@@ -344,12 +287,9 @@
 
     function validasiUkuranFile(input, maxMB) {
         const file = input.files[0];
-        if (file) {
-            const maxSize = maxMB * 1024 * 1024;
-            if (file.size > maxSize) {
-                alert(`Ukuran file "${file.name}" terlalu besar!\nMaksimal ukuran file adalah ${maxMB} MB.`);
-                input.value = "";
-            }
+        if (file && file.size > maxMB * 1024 * 1024) {
+            alert(`Ukuran file "${file.name}" terlalu besar! Maksimal ${maxMB} MB.`);
+            input.value = "";
         }
     }
 
@@ -369,36 +309,25 @@
             img.onload = () => {
                 let width = img.width;
                 let height = img.height;
-
                 if (width > maxWidth) {
                     height = Math.round((height * maxWidth) / width);
                     width = maxWidth;
                 }
-
                 const canvas = document.createElement('canvas');
                 canvas.width = width;
                 canvas.height = height;
                 const ctx = canvas.getContext('2d');
                 ctx.drawImage(img, 0, 0, width, height);
-
-                const base64 = canvas.toDataURL('image/jpeg', quality);
-                resolve(base64);
+                resolve(canvas.toDataURL('image/jpeg', quality));
             };
             img.onerror = error => reject(error);
         });
     }
 
-    // FORM SUBMIT DENGAN HELPER FETCH (SAFE UNTUK LOCAL & ONLINE)
     document.getElementById('formPendaftaran').addEventListener('submit', async function(e) {
         e.preventDefault();
         const btnSubmit = document.getElementById('btnSubmit');
         const statusForm = document.getElementById('statusForm');
-
-        const formulirFile = document.getElementById('formulir_file').files[0];
-        const kkFile = document.getElementById('kk_file').files[0];
-        const aktaFile = document.getElementById('akta').files[0];
-        const ijazahFile = document.getElementById('ijazah').files[0];
-        const fotoFile = document.getElementById('foto').files[0];
 
         btnSubmit.disabled = true;
         btnSubmit.innerText = "Memproses & Mengirim...";
@@ -406,12 +335,6 @@
         statusForm.style.color = "blue";
 
         try {
-            const formulirBase64 = await kompresGambar(formulirFile);
-            const kkBase64 = await kompresGambar(kkFile);
-            const aktaBase64 = await kompresGambar(aktaFile);
-            const ijazahBase64 = await kompresGambar(ijazahFile);
-            const fotoBase64 = await kompresGambar(fotoFile);
-
             const payload = {
                 action: "daftarBaru",
                 nisn: document.getElementById('nisn').value,
@@ -428,7 +351,6 @@
                 lingkar_kepala: document.getElementById('lingkar_kepala').value,
                 jalur: document.getElementById('jalur').value,
                 
-                // ORTU
                 nama_ayah: document.getElementById('nama_ayah').value,
                 tempat_lahir_ayah: document.getElementById('tempat_lahir_ayah').value,
                 tanggal_lahir_ayah: document.getElementById('tanggal_lahir_ayah').value,
@@ -443,28 +365,26 @@
 
                 wa: document.getElementById('wa').value,
                 
-                formulirBase64: formulirBase64,
-                formulirExt: formulirFile.name.split('.').pop(),
-                kkBase64: kkBase64,
-                kkExt: kkFile.name.split('.').pop(),
-                aktaBase64: aktaBase64,
-                aktaExt: aktaFile.name.split('.').pop(),
-                ijazahBase64: ijazahBase64,
-                ijazahExt: ijazahFile.name.split('.').pop(),
-                fotoBase64: fotoBase64,
+                formulirBase64: await kompresGambar(document.getElementById('formulir_file').files[0]),
+                formulirExt: document.getElementById('formulir_file').files[0].name.split('.').pop(),
+                kkBase64: await kompresGambar(document.getElementById('kk_file').files[0]),
+                kkExt: document.getElementById('kk_file').files[0].name.split('.').pop(),
+                aktaBase64: await kompresGambar(document.getElementById('akta').files[0]),
+                aktaExt: document.getElementById('akta').files[0].name.split('.').pop(),
+                ijazahBase64: await kompresGambar(document.getElementById('ijazah').files[0]),
+                ijazahExt: document.getElementById('ijazah').files[0].name.split('.').pop(),
+                fotoBase64: await kompresGambar(document.getElementById('foto').files[0]),
                 latitude: parseFloat(document.getElementById('latitude').value),
                 longitude: parseFloat(document.getElementById('longitude').value)
             };
 
             if (typeof google !== 'undefined' && google.script && google.script.run) {
                 google.script.run
-                    .withSuccessHandler(function(res) {
-                        handleResponseForm(res);
-                    })
-                    .withFailureHandler(function(err) {
+                    .withSuccessHandler(handleResponseForm)
+                    .withFailureHandler(() => {
                         btnSubmit.disabled = false;
                         btnSubmit.innerText = "2. Kirim Pendaftaran";
-                        statusForm.innerText = "Terjadi kesalahan koneksi!";
+                        statusForm.innerText = "Terjadi kesalahan sistem/koneksi!";
                         statusForm.style.color = "red";
                     })
                     .doPost({ postData: { contents: JSON.stringify(payload) } });
@@ -477,7 +397,7 @@
         } catch (err) {
             btnSubmit.disabled = false;
             btnSubmit.innerText = "2. Kirim Pendaftaran";
-            alert("Gagal memproses file.");
+            alert("Gagal memproses file pendaftaran.");
         }
     });
 
@@ -498,7 +418,6 @@
         }
     }
 
-    // CEK STATUS
     function cekStatusSiswa() {
         const nisn = document.getElementById('searchNisn').value.trim();
         const hasilDiv = document.getElementById('hasilCekStatus');
@@ -508,7 +427,7 @@
 
         if (typeof google !== 'undefined' && google.script && google.script.run) {
             google.script.run
-                .withSuccessHandler(function(res) {
+                .withSuccessHandler(res => {
                     if(res.result === "success") {
                         let d = res.data;
                         let css = d.status === "DITERIMA" ? "status-diterima" : (d.status === "DITOLAK" ? "status-ditolak" : "status-proses");
@@ -525,12 +444,9 @@
                     }
                 })
                 .doPost({ postData: { contents: JSON.stringify({ action: "cekStatus", nisn: nisn }) } });
-        } else {
-            hasilDiv.innerHTML = `<div class="status-box status-ditolak">Harap jalankan via Apps Script!</div>`;
         }
     }
 
-    // PETUGAS / ADMIN
     let currentPin = "";
     function loadDataPetugas() {
         const pin = document.getElementById('pinPetugas').value.trim() || currentPin;
@@ -538,7 +454,7 @@
 
         if (typeof google !== 'undefined' && google.script && google.script.run) {
             google.script.run
-                .withSuccessHandler(function(res) {
+                .withSuccessHandler(res => {
                     if(res.result === "success") {
                         currentPin = pin;
                         document.getElementById('loginPetugasView').style.display = "none";
@@ -558,20 +474,17 @@
                                     <td>
                                         <b>${item.nama}</b><br>
                                         <small>NISN: ${item.nisn}</small><br>
-                                        <small>TTL: ${item.tempat_lahir}, ${item.tanggal_lahir}</small><br>
-                                        <small>JK: ${item.jenis_kelamin}</small>
+                                        <small>TTL: ${item.tempat_lahir}, ${item.tanggal_lahir}</small>
                                     </td>
                                     <td>
-                                        <small><b>Ayah:</b> ${item.nama_ayah} (${item.tempat_lahir_ayah}, ${item.tanggal_lahir_ayah})<br>Pekerjaan: ${item.pekerjaan_ayah}<br>Gaji: ${item.penghasilan_ayah}</small><br><br>
-                                        <small><b>Ibu:</b> ${item.nama_ibu} (${item.tempat_lahir_ibu}, ${item.tanggal_lahir_ibu})<br>Pekerjaan: ${item.pekerjaan_ibu}<br>Gaji: ${item.penghasilan_ibu}</small><br>
-                                        <small><b>WA Ortu:</b> ${item.wa}</small>
+                                        <small><b>Ayah:</b> ${item.nama_ayah}<br><b>Ibu:</b> ${item.nama_ibu}<br><b>WA:</b> ${item.wa}</small>
                                     </td>
                                     <td>${item.jalur}<br><small>${item.jarak} Meter</small></td>
                                     <td>
                                         ${item.formulir ? `<a href="${item.formulir}" target="_blank">Formulir</a>` : '-'}<br>
                                         ${item.kk ? `<a href="${item.kk}" target="_blank">KK</a>` : '-'}<br>
                                         ${item.akta ? `<a href="${item.akta}" target="_blank">Akta</a>` : '-'}<br>
-                                        ${item.ijazah ? `<a href="${item.ijazah}" target="_blank">Ijazah/SKHU</a>` : '-'}<br>
+                                        ${item.ijazah ? `<a href="${item.ijazah}" target="_blank">Ijazah</a>` : '-'}<br>
                                         ${item.foto ? `<a href="${item.foto}" target="_blank">Foto</a>` : '-'}
                                     </td>
                                     <td>
@@ -601,7 +514,7 @@
         
         if (typeof google !== 'undefined' && google.script && google.script.run) {
             google.script.run
-                .withSuccessHandler(function(res) {
+                .withSuccessHandler(res => {
                     if(res.result === 'success') {
                         alert("Status Berhasil Diperbarui!");
                         loadDataPetugas();
