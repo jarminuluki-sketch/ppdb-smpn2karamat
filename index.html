@@ -3,42 +3,54 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PPDB Online</title>
+  <title>PPDB Online SMP Negeri 2 Karamat</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
-    body { background-color: #f8f9fa; }
-    .card { border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-    .btn-primary { background-color: #2563eb; border: none; padding: 12px; font-weight: 600; }
+    body { background-color: #f4f6f9; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    .card { border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); border: none; }
+    .header-logo { max-height: 100px; width: auto; object-fit: contain; }
+    .btn-primary { background-color: #2563eb; border: none; padding: 12px; font-weight: 600; border-radius: 8px; }
     .btn-primary:hover { background-color: #1d4ed8; }
-    .status-text { font-weight: bold; color: #2563eb; margin-top: 10px; }
+    .status-text { font-weight: bold; color: #2563eb; margin-top: 12px; }
+    .section-title { border-bottom: 2px solid #e5e7eb; padding-bottom: 8px; margin-top: 25px; margin-bottom: 18px; color: #374151; font-weight: 600; }
   </style>
 </head>
 <body>
 
 <div class="container py-4">
   <div class="row justify-content-center">
-    <div class="col-md-8">
-      <div class="card p-4">
-        <h3 class="text-center mb-4 text-primary font-weight-bold">Formulir PPDB Online</h3>
+    <div class="col-md-9 col-lg-8">
+      <div class="card p-4 p-md-5">
         
+        <!-- HEADER LOGO DARI GOOGLE DRIVE KAMU & JUDUL -->
+        <div class="text-center mb-4">
+          <img src="https://lh3.googleusercontent.com/d/1eoGamxmD0zINXITkYiDxcmQJVeSkltOa" alt="Logo Sekolah" class="header-logo mb-3">
+          <h3 class="fw-bold text-primary mb-1">PPDB ONLINE</h3>
+          <h5 class="fw-semibold text-secondary">SMP NEGERI 2 KARAMAT</h5>
+          <p class="text-muted small mb-0">Tahun Ajaran 2026/2027</p>
+        </div>
+
+        <hr class="mb-4">
+
         <form id="formPPDB">
+          <!-- DATA SISWA -->
+          <h6 class="section-title">A. Data Calon Siswa</h6>
           <div class="row g-3">
-            <!-- Data Calon Siswa -->
             <div class="col-md-6">
               <label class="form-label">NISN *</label>
-              <input type="number" id="nisn" class="form-control" required>
+              <input type="number" id="nisn" class="form-control" placeholder="10 digit NISN" required>
             </div>
             <div class="col-md-6">
               <label class="form-label">NIK *</label>
-              <input type="number" id="nik" class="form-control" required>
+              <input type="number" id="nik" class="form-control" placeholder="16 digit NIK" required>
             </div>
             <div class="col-md-6">
               <label class="form-label">No. Kartu Keluarga *</label>
-              <input type="number" id="no_kk" class="form-control" required>
+              <input type="number" id="no_kk" class="form-control" placeholder="16 digit No. KK" required>
             </div>
             <div class="col-md-6">
               <label class="form-label">Nama Lengkap *</label>
-              <input type="text" id="nama" class="form-control" required>
+              <input type="text" id="nama" class="form-control" placeholder="Sesuai Ijazah/Akta" required>
             </div>
             <div class="col-md-6">
               <label class="form-label">Tempat Lahir *</label>
@@ -66,8 +78,6 @@
                 <option value="Pindah Tugas Orang Tua">Pindah Tugas Orang Tua</option>
               </select>
             </div>
-
-            <!-- Detail Lainnya -->
             <div class="col-md-4">
               <label class="form-label">Hobi</label>
               <input type="text" id="hobi" class="form-control">
@@ -92,11 +102,11 @@
               <label class="form-label">Lingkar Kepala (cm)</label>
               <input type="number" id="lingkar_kepala" class="form-control">
             </div>
+          </div>
 
-            <hr class="my-4">
-            <h5 class="text-secondary">Data Orang Tua</h5>
-
-            <!-- Ayah -->
+          <!-- DATA ORANG TUA -->
+          <h6 class="section-title">B. Data Orang Tua / Wali</h6>
+          <div class="row g-3">
             <div class="col-md-6">
               <label class="form-label">Nama Ayah *</label>
               <input type="text" id="nama_ayah" class="form-control" required>
@@ -118,7 +128,6 @@
               <input type="text" id="penghasilan_ayah" class="form-control">
             </div>
 
-            <!-- Ibu -->
             <div class="col-md-6">
               <label class="form-label">Nama Ibu *</label>
               <input type="text" id="nama_ibu" class="form-control" required>
@@ -139,49 +148,60 @@
               <label class="form-label">Penghasilan Ibu</label>
               <input type="text" id="penghasilan_ibu" class="form-control">
             </div>
+          </div>
 
-            <hr class="my-4">
-            <h5 class="text-secondary">Unggah Berkas Persyaratan (PDF / Gambar, Max 5MB)</h5>
-
+          <!-- UNGGAH BERKAS -->
+          <h6 class="section-title">C. Unggah Berkas Persyaratan</h6>
+          <small class="text-muted d-block mb-3">* Maksimal 5 MB per file (File gambar akan otomatis dikompres agar sangat cepat).</small>
+          
+          <div class="row g-3">
             <div class="col-12">
-              <label class="form-label">Unggah Formulir Pendaftaran</label>
+              <label class="form-label">Unggah Formulir Pendaftaran (PDF/Gambar)</label>
               <input type="file" id="file_formulir" class="form-control" accept=".pdf,image/*">
             </div>
             <div class="col-12">
-              <label class="form-label">Unggah Kartu Keluarga (KK)</label>
+              <label class="form-label">Unggah Kartu Keluarga (PDF/Gambar)</label>
               <input type="file" id="file_kk" class="form-control" accept=".pdf,image/*">
             </div>
             <div class="col-12">
-              <label class="form-label">Unggah Akta Kelahiran</label>
+              <label class="form-label">Unggah Akta Kelahiran (PDF/Gambar)</label>
               <input type="file" id="file_akta" class="form-control" accept=".pdf,image/*">
             </div>
             <div class="col-12">
-              <label class="form-label">Unggah Ijazah / SKHU</label>
+              <label class="form-label">Unggah Ijazah / SKHU (PDF/Gambar)</label>
               <input type="file" id="file_ijazah" class="form-control" accept=".pdf,image/*">
             </div>
             <div class="col-12">
-              <label class="form-label">Unggah Swafoto Siswa</label>
+              <label class="form-label">Unggah Swafoto Siswa (Gambar)</label>
               <input type="file" id="file_foto" class="form-control" accept="image/*">
             </div>
+          </div>
 
-            <!-- Titik Lokasi -->
-            <div class="col-12 mt-4">
-              <button type="button" class="btn btn-outline-primary w-100" id="btnLokasi" onclick="ambilLokasi()">
+          <!-- TOMBOL AKSI -->
+          <div class="row g-3 mt-4">
+            <div class="col-12">
+              <button type="button" class="btn btn-outline-primary w-100 fw-bold" id="btnLokasi" onclick="ambilLokasi()">
                 1. Ambil Lokasi Rumah Saya
               </button>
-              <small id="textLokasi" class="text-muted d-block text-center mt-1"></small>
+              <small id="textLokasi" class="text-muted d-block text-center mt-2"></small>
             </div>
 
-            <!-- Kirim Pendaftaran -->
-            <div class="col-12 mt-3 text-center">
-              <button type="submit" class="btn btn-primary w-100" id="btnKirim">
+            <div class="col-12 text-center mt-3">
+              <button type="submit" class="btn btn-primary w-100 fw-bold fs-6" id="btnKirim">
                 2. Kirim Pendaftaran
               </button>
-              <div id="statusProses" class="status-text"></div>
+              
+              <div id="statusProses" class="status-text mt-3"></div>
             </div>
-
           </div>
         </form>
+
+        <hr class="mt-5">
+        <div class="text-center text-muted small">
+          <p class="mb-1">Pastikan seluruh data terisi dengan benar sebelum mengirimkan form.</p>
+          <p class="mb-0">© 2026 PPDB SMP Negeri 2 Karamat - Panitia Penerimaan Peserta Didik Baru</p>
+        </div>
+
       </div>
     </div>
   </div>
@@ -191,7 +211,6 @@
   let userLat = 0;
   let userLng = 0;
 
-  // 1. Ambil Geolokasi
   function ambilLokasi() {
     const btn = document.getElementById('btnLokasi');
     const txt = document.getElementById('textLokasi');
@@ -203,20 +222,20 @@
           userLat = pos.coords.latitude;
           userLng = pos.coords.longitude;
           btn.innerText = "1. Ambil Lokasi Rumah Saya";
-          txt.className = "text-success d-block text-center mt-1";
+          txt.className = "text-success fw-bold d-block text-center mt-2";
           txt.innerText = "Lokasi Berhasil Dikunci! (" + userLat.toFixed(5) + ", " + userLng.toFixed(5) + ")";
         },
         (err) => {
           btn.innerText = "1. Ambil Lokasi Rumah Saya";
-          alert("Gagal mengambil lokasi! Mohon izinkan akses GPS di HP/Browser.");
+          alert("Gagal mengambil lokasi! Mohon aktifkan GPS di perangkat Anda.");
         }
       );
     } else {
-      alert("Browser Anda tidak mendukung Geolocation!");
+      alert("Browser Anda tidak mendukung fitur Geolocation.");
     }
   }
 
-  // 2. Fungsi Kompresi Berkas Otomatis (Super Fast Upload)
+  // Fungsi Kompresi Berkas Gambar Otomatis
   function processFile(fileInputId) {
     return new Promise((resolve) => {
       const fileInput = document.getElementById(fileInputId);
@@ -228,7 +247,6 @@
       const file = fileInput.files[0];
       const ext = file.name.split('.').pop().toLowerCase();
 
-      // Jika PDF, langsung baca Base64 tanpa kompresi
       if (file.type === "application/pdf") {
         const reader = new FileReader();
         reader.onload = e => resolve({ base64: e.target.result, ext: ext });
@@ -237,7 +255,6 @@
         return;
       }
 
-      // Jika Foto/Gambar, Kompres Ukurannya Otomatis (max Width 1000px, quality 0.7)
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = event => {
@@ -259,7 +276,6 @@
           const ctx = canvas.getContext('2d');
           ctx.drawImage(img, 0, 0, width, height);
 
-          // Hasil dikompres menjadi JPEG ukuran kecil (sekitar ~100-300 KB)
           const compressedBase64 = canvas.toDataURL('image/jpeg', 0.7);
           resolve({ base64: compressedBase64, ext: 'jpg' });
         };
@@ -268,7 +284,6 @@
     });
   }
 
-  // 3. Submit Form
   document.getElementById('formPPDB').addEventListener('submit', async function(e) {
     e.preventDefault();
 
@@ -281,10 +296,9 @@
     const statusProses = document.getElementById('statusProses');
 
     btnKirim.disabled = true;
-    statusProses.innerText = "Mengompresi & Menyimpan data dan berkas...";
+    statusProses.innerText = "Menyimpan data dan berkas ke Google Drive...";
 
     try {
-      // Olah semua berkas gambar/pdf secara paralel
       const [fFormulir, fKK, fAkta, fIjazah, fFoto] = await Promise.all([
         processFile('file_formulir'),
         processFile('file_kk'),
@@ -332,7 +346,6 @@
         fotoBase64: fFoto.base64
       };
 
-      // Kirim via Google Script Run
       google.script.run
         .withSuccessHandler(function(res) {
           btnKirim.disabled = false;
@@ -356,7 +369,7 @@
 
     } catch (err) {
       btnKirim.disabled = false;
-      statusProses.innerText = "Gagal memproses file!";
+      statusProses.innerText = "Gagal memproses berkas!";
       alert("Error: " + err);
     }
   });
