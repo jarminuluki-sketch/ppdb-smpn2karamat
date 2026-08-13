@@ -10,7 +10,7 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <!-- Bootstrap 5 CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Animate.css untuk Animasi Halus -->
+  <!-- Animate.css -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
   <style>
@@ -30,7 +30,6 @@
       padding-bottom: 40px;
     }
 
-    /* GLASSMORPHISM & CARD STYLING */
     .main-card {
       background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(10px);
@@ -39,7 +38,6 @@
       box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
     }
 
-    /* HEADER BANNER */
     .header-banner {
       background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
       border-radius: 16px;
@@ -57,7 +55,6 @@
       transform: scale(1.05);
     }
 
-    /* CUSTOM NAV PILLS */
     .nav-pills {
       background: #f1f5f9;
       padding: 6px;
@@ -77,7 +74,6 @@
       box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     }
 
-    /* FORM STYLING */
     .form-label {
       font-weight: 600;
       font-size: 0.85rem;
@@ -123,7 +119,6 @@
       font-size: 0.85rem;
     }
 
-    /* CUSTOM BUTTONS */
     .btn-custom-primary {
       background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
       border: none;
@@ -140,7 +135,6 @@
       color: white;
     }
 
-    /* BADGES & ANIMATED PULSE */
     .badge-status {
       font-size: 1.1rem;
       padding: 12px 24px;
@@ -170,7 +164,7 @@
           <img src="https://lh3.googleusercontent.com/d/1eoGamxmD0zINXITkYiDxcmQJVeSkltOa" alt="Logo" class="header-logo mb-2">
           <h2 class="fw-bold mb-1"><i class="fa-solid fa-graduation-cap me-2"></i>PPDB ONLINE</h2>
           <h5 class="fw-medium text-light opacity-90 mb-0">SMP NEGERI 2 KARAMAT</h5>
-          <small class="text-white-50">Tahun Ajaran 2026 / 2027</small>
+          <small class="text-white-50">Sistem Pendaftaran Peserta Didik Baru</small>
         </div>
 
         <!-- MENU NAVIGASI TAB -->
@@ -199,7 +193,21 @@
             <form id="formPPDB">
               
               <div class="section-divider">
-                <span class="section-title-badge"><i class="fa-solid fa-id-card me-1"></i> A. DATA CALON SISWA</span>
+                <span class="section-title-badge"><i class="fa-solid fa-calendar-days me-1"></i> A. PERIODE PENDAFTARAN</span>
+              </div>
+
+              <div class="row g-3">
+                <div class="col-md-12">
+                  <label class="form-label">Tahun Ajaran *</label>
+                  <select id="tahun_ajaran" class="form-select fw-bold text-primary" required>
+                    <!-- Terisi Otomatis oleh Sistem -->
+                    <option value="">Mengambil daftar tahun ajaran...</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="section-divider">
+                <span class="section-title-badge"><i class="fa-solid fa-id-card me-1"></i> B. DATA CALON SISWA</span>
               </div>
 
               <div class="row g-3">
@@ -279,7 +287,7 @@
               </div>
 
               <div class="section-divider">
-                <span class="section-title-badge"><i class="fa-solid fa-users me-1"></i> B. DATA ORANG TUA / WALI</span>
+                <span class="section-title-badge"><i class="fa-solid fa-users me-1"></i> C. DATA ORANG TUA / WALI</span>
               </div>
 
               <div class="row g-3">
@@ -353,7 +361,7 @@
               </div>
 
               <div class="section-divider">
-                <span class="section-title-badge"><i class="fa-solid fa-file-arrow-up me-1"></i> C. UNGGAH BERKAS</span>
+                <span class="section-title-badge"><i class="fa-solid fa-file-arrow-up me-1"></i> D. UNGGAH BERKAS</span>
               </div>
 
               <div class="row g-3">
@@ -421,7 +429,7 @@
                   <div class="border-bottom pb-3 mb-3 d-flex justify-content-between align-items-center">
                     <div>
                       <h5 class="fw-bold mb-0 text-primary" id="res_nama">-</h5>
-                      <small class="text-muted">NISN: <span id="res_nisn">-</span></small>
+                      <small class="text-muted">NISN: <span id="res_nisn">-</span> | TA: <strong id="res_ta">-</strong></small>
                     </div>
                     <span id="res_status" class="badge badge-status bg-secondary">Diproses</span>
                   </div>
@@ -472,7 +480,7 @@
                   <thead class="table-light">
                     <tr>
                       <th>Siswa</th>
-                      <th>Jalur / Jarak</th>
+                      <th>TA / Jalur / Jarak</th>
                       <th>Berkas Drive</th>
                       <th>Status Saat Ini</th>
                       <th style="min-width: 180px;">Aksi Verifikasi</th>
@@ -491,7 +499,7 @@
 
         <hr class="mt-5">
         <div class="text-center text-muted small">
-          <p class="mb-0">© 2026 PPDB SMP Negeri 2 Karamat • Panitia Penerimaan Peserta Didik Baru</p>
+          <p class="mb-0">© PPDB SMP Negeri 2 Karamat • Panitia Penerimaan Peserta Didik Baru</p>
         </div>
 
       </div>
@@ -503,6 +511,25 @@
 <script>
   let userLat = 0;
   let userLng = 0;
+
+  // MUAT DROPDOWN TAHUN AJARAN OTOMATIS SAAT HALAMAN DIBUKA
+  window.addEventListener('DOMContentLoaded', () => {
+    google.script.run
+      .withSuccessHandler((list) => {
+        const select = document.getElementById('tahun_ajaran');
+        select.innerHTML = '';
+        
+        // Pilihan saat ini (Tahun Ajaran Aktif) akan otomatis terpilih
+        list.forEach((ta, idx) => {
+          const opt = document.createElement('option');
+          opt.value = ta;
+          opt.innerText = ta;
+          if (idx === 1) opt.selected = true; // Menjadikan tahun ajaran berjalan sebagai default
+          select.appendChild(opt);
+        });
+      })
+      .getOpsiTahunAjaran();
+  });
 
   function ambilLokasi() {
     const btn = document.getElementById('btnLokasi');
@@ -586,7 +613,6 @@
     if (userLat === 0 && userLng === 0) return alert("Silakan ambil titik lokasi rumah terlebih dahulu!");
 
     const btnKirim = document.getElementById('btnKirim');
-    const statusProses = document.getElementById('statusProses');
     btnKirim.disabled = true;
     btnKirim.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-2"></i>MEMPROSES DATA & UNGGAH BERKAS...';
 
@@ -596,6 +622,7 @@
       ]);
 
       const payload = {
+        tahun_ajaran: document.getElementById('tahun_ajaran').value,
         nisn: nisn, nik: nik, no_kk: no_kk,
         nama: document.getElementById('nama').value,
         tempat_lahir: document.getElementById('tempat_lahir').value,
@@ -665,6 +692,7 @@
           const d = res.data;
           document.getElementById('res_nama').innerText = d.nama;
           document.getElementById('res_nisn').innerText = d.nisn;
+          document.getElementById('res_ta').innerText = d.tahun_ajaran;
           document.getElementById('res_jalur').innerText = d.jalur;
           document.getElementById('res_jarak').innerText = d.jarak + " Meter";
 
@@ -708,7 +736,11 @@
             html += `
               <tr>
                 <td><strong>${item.nama}</strong><br><small class="text-muted">NISN: ${item.nisn}</small></td>
-                <td><span class="badge bg-light text-dark border">${item.jalur}</span><br><small class="text-muted"><i class="fa-solid fa-location-dot me-1"></i>${item.jarak} M</small></td>
+                <td>
+                  <span class="badge bg-primary mb-1">${item.tahun_ajaran}</span><br>
+                  <span class="badge bg-light text-dark border">${item.jalur}</span><br>
+                  <small class="text-muted"><i class="fa-solid fa-location-dot me-1"></i>${item.jarak} M</small>
+                </td>
                 <td>
                   ${item.formulir ? `<a href="${item.formulir}" target="_blank" class="btn btn-xs btn-outline-primary mb-1 py-0 px-2 small"><i class="fa-solid fa-file me-1"></i>Form</a> ` : ''}
                   ${item.kk ? `<a href="${item.kk}" target="_blank" class="btn btn-xs btn-outline-primary mb-1 py-0 px-2 small"><i class="fa-solid fa-id-card me-1"></i>KK</a> ` : ''}
